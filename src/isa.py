@@ -39,6 +39,7 @@ class Op(Enum):
     BEQ = iota(), OpType.RRI
     BLEQ = iota(), OpType.RRI
     ADDI = iota(), OpType.RRI
+    ANDI = iota(), OpType.RRI
     ADD = iota(), OpType.RRR
     SHR = iota(), OpType.RRI
     HALT = iota_reset(), OpType.NOARG
@@ -83,7 +84,8 @@ MemoryWord: TypeAlias = Instruction | int
 
 
 class ALUControl(Enum):
-    add = 0
+    add = iota()
+    band = iota()
     inc = iota()
     sub = iota()
     shr = iota()
@@ -97,6 +99,8 @@ class ALUControl(Enum):
         match self, x, y:
             case ALUControl.add, int(x), int(y):
                 return (x + y, x + y > 0xFFFFFFFF)
+            case ALUControl.band, int(x), int(y):
+                return (x & y, False)
             case ALUControl.shr, int(x), int(y):
                 return (x >> y, False)
             case ALUControl.inc, int(x), _:
@@ -113,7 +117,7 @@ class ALUControl(Enum):
                 return (r, False)
             case ALUControl.mask_imm, (_, _, _, ImmArg(n)), _:
                 return (n, False)
-        assert False, f"Unreachable: '{self}' '{x}' '{y}'"
+        assert False, f"Unsupported ALU operation: '{self}' '{x}' '{y}'"
 
 
 class MIJump(NamedTuple):
