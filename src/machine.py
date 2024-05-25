@@ -91,7 +91,6 @@ class DataPath:
             self.registers[reg] = val
     
 
-# TODO: tick
 class ControlUnit:
     microcode: list[isa.MInstruction]
     mpc: int
@@ -104,6 +103,9 @@ class ControlUnit:
         self.data_path = data_path
         self._tick = 0
 
+    def tick() -> None:
+        self._tick += 1
+
     def signal_latch_mpc(self, mpc_sel: int) -> None:
         self.mpc = mpc_sel
 
@@ -114,6 +116,7 @@ class ControlUnit:
             next_mpc = self._execute_jump_mi(minstr)
         else:
             self._execute_operation_mi(minstr)
+        self.tick()
         self.signal_latch_mpc(next_mpc)
 
     def _execute_jump_mi(self, minstr: isa.MIJump) -> int:
