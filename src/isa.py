@@ -47,6 +47,9 @@ class Op(Enum):
     def type(self) -> OpType:
         return self.value[1]
 
+    def __repr__(self) -> str:
+        return self.name
+
 
 class ImmArg(NamedTuple):
     val: int
@@ -121,6 +124,17 @@ class MIJump(NamedTuple):
     if_op: tuple[Op, int] = (Op.HALT, -1)
     to: int = -1
 
+    def __repr__(self) -> str:
+        if self.to != -1:
+            return f"jump {self.to}"
+        res = f"jmp:{self.alu_ctrl.name}({self.x_sel}, {self.y_sel})"
+        if self.if_zero != -1:
+            res += f" Z -> {self.if_zero}"
+        if self.if_carry != -1:
+            res += f" C -> {self.if_carry}"
+        if self.if_op[1] != -1:
+            res += f" {self.if_op[0].name} -> {self.if_op[1]}"
+        return res
 
 class MIOperation(NamedTuple):
     x_sel: int = 0
@@ -130,6 +144,12 @@ class MIOperation(NamedTuple):
     mem_wr: bool = False
     mem_rd: bool = False
     halt: bool = False
+
+    def __repr__(self) -> str:
+        return (
+            f"op:{self.alu_ctrl.name}(${self.x_sel}, ${self.y_sel}) -> ${self.rwr_sel}"
+            f"{' WR' if self.mem_wr else ''}{' RD' if self.mem_rd else ''}{' STOP' if self.halt else ''}"
+        )
 
 
 MInstruction: TypeAlias = MIOperation | MIJump

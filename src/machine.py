@@ -2,7 +2,9 @@ from enum import Enum, auto
 import sys
 from microcode import microcode
 import isa
+import logging
 
+# TODO: think about better ways of logging state and microinstructions
 
 def main(program_file: str, input_file: str) -> None:
     with open(program_file, "rb") as f:
@@ -19,9 +21,11 @@ def main(program_file: str, input_file: str) -> None:
 def simulation(program: isa.Program, input_buffer: list[int]) -> str:
     data_path = DataPath(program, input_buffer)
     control_unit = ControlUnit(microcode, data_path)
+    logging.debug("%s", control_unit)
     try:
         while True:
             control_unit.execute_microinstruction()
+            logging.debug("%s", control_unit)
     except StopIteration:
         pass
 
@@ -61,7 +65,9 @@ class DataPath:
         data = self.registers[isa.DR]
         assert isinstance(address, int) and isinstance(data, int), "Expected data, but got instruction"
         if address == isa.OUTPUT_DEVICE_ADDR:
-            self.output_buffer.append(data & 0xFF)
+            char = data & 0xFF
+            logging.debug("output: %s", chr(char))
+            self.output_buffer.append(char)
         self.memory[address] = data
 
     def signal_mem_rd(self) -> None:
@@ -71,6 +77,7 @@ class DataPath:
         if address == isa.INPUT_DEVICE_ADDR:
             popped = 0 if len(self.input_buffer) == 0 else self.input_buffer.pop(0)
             read = popped & 0xFF
+            logging.debug("input: %s", chr(read))
 
         self.registers[isa.DR] = read
 
@@ -94,6 +101,14 @@ class DataPath:
             self.registers[reg] = val
 
 
+def memory_word_repr(word: isa.MemoryWord) -> str:
+    if isinstance(word, int):
+        return f"{word:4}"
+    else:
+        [op, *args] = word
+        return f"{op.name:4}"
+
+
 class ControlUnit:
     microcode: list[isa.MInstruction]
     mpc: int
@@ -114,6 +129,7 @@ class ControlUnit:
 
     def execute_microinstruction(self) -> None:
         minstr = self.microcode[self.mpc]
+        logging.debug("microinstruction: %s", minstr)
         next_mpc = self.mpc + 1
         if isinstance(minstr, isa.MIJump):
             next_mpc = self._execute_jump_mi(minstr)
@@ -145,11 +161,18 @@ class ControlUnit:
         if minstr.halt:
             raise StopIteration("Got halt signal")
 
+    def __repr__(self) -> str:
+        registers_repr = ", ".join(memory_word_repr(word) for word in self.data_path.registers)
+        state_repr = f"tick:{self._tick:3} mpc:{self.mpc:3} regs:{registers_repr}"
+        minstr = self.microcode[self.mpc]
+        return f"{state_repr}"
+
 
 def _valid_register(reg: int) -> bool:
     return 0 <= reg and reg < isa.REG_N
 
 
 if __name__ == "__main__":
+    logging.getLogger().setLevel(logging.DEBUG)
     assert len(sys.argv) == 3
     main(sys.argv[1], sys.argv[2])
