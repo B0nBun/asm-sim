@@ -1,9 +1,10 @@
-from typing import NamedTuple, TypeAlias, Final, Generator, Optional, TextIO, Callable, NewType, Union
-from enum import Enum
-from utils import iota, iota_reset
+import json
 import math
 import pickle
-import json
+from enum import Enum
+from typing import Callable, Final, Generator, NamedTuple, NewType, Optional, TextIO, TypeAlias, Union
+
+from utils import iota, iota_reset
 
 GEN_REG_N: Final[int] = 6
 AR = GEN_REG_N
@@ -137,6 +138,7 @@ class MIJump(NamedTuple):
             res += f" {self.if_op[0].name} -> {self.if_op[1]}"
         return res
 
+
 class MIOperation(NamedTuple):
     x_sel: int = 0
     y_sel: int = 0
@@ -167,17 +169,19 @@ class ProgramEncoder(json.JSONEncoder):
             return obj.code()
         return super().default(obj)
 
+
 def instruction_from_tuple(tup: tuple[int, ...]) -> Instruction:
     op = next(op for op in Op if op.code() == tup[0])
     assert op is not None, f"Unknown opcode '{tup[0]}'"
     match op.type(), tup[1:]:
-        case OpType.RRR, ([int(r1)], [int(r2)], [int(r3)]): 
+        case OpType.RRR, ([int(r1)], [int(r2)], [int(r3)]):
             return (op, RegArg(r1), RegArg(r2), RegArg(r3))
-        case OpType.RRI, ([int(r1)], [int(r2)], [int(im)]): 
+        case OpType.RRI, ([int(r1)], [int(r2)], [int(im)]):
             return (op, RegArg(r1), RegArg(r2), ImmArg(im))
         case OpType.NOARG, ():
             return (op,)
     assert False, f"Unknown serialized instruction {tup}"
+
 
 def write_program(program: Program, out: TextIO) -> None:
     json.dump(program, out, cls=ProgramEncoder)

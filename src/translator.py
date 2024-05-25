@@ -1,10 +1,13 @@
 from __future__ import annotations
-import isa
-import sys
+
 import json
-from typing import Generator, Optional
-import lexer as lex
 import math
+import sys
+from typing import Generator, Optional
+
+import isa
+import lexer as lex
+
 
 def main(source: str, out_target: str) -> None:
     with open(source, "r") as f:
@@ -12,6 +15,7 @@ def main(source: str, out_target: str) -> None:
     program = parse(input)
     with open(out_target, "w") as f:
         json.dump(program, f, cls=isa.ProgramEncoder)
+
 
 def parse(input: str) -> isa.Program:
     l = lex.Lexer.new(input)

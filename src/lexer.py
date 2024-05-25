@@ -1,9 +1,10 @@
 from __future__ import annotations
-from typing import NamedTuple, Optional, Sequence, Callable, Generator, Final, TypeAlias
-from dataclasses import dataclass
+
 import re
-from enum import Enum
 import sys
+from dataclasses import dataclass
+from enum import Enum
+from typing import Callable, Final, Generator, NamedTuple, Optional, Sequence, TypeAlias
 
 
 def main(source: str) -> None:

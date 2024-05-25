@@ -1,5 +1,5 @@
-from typing import NoReturn
 import sys
+from typing import NoReturn
 
 _iota_cnt = 0
 

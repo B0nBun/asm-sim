@@ -1,6 +1,7 @@
-from typing import Final, TypeAlias, Callable
-from isa import MIJump, MIOperation, Op
+from typing import Callable, Final, TypeAlias
+
 import isa
+from isa import MIJump, MIOperation, Op
 
 _load_0rr: Final[list[isa.MInstruction]] = [
     MIOperation(x_sel=isa.DR, alu_ctrl=isa.ALUControl.mask_snd_r, rwr_sel=isa.AR),

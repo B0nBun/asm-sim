@@ -1,10 +1,12 @@
-from enum import Enum, auto
-import sys
-from microcode import microcode
-import isa
 import logging
+import sys
+from enum import Enum, auto
+
+import isa
+from microcode import microcode
 
 # TODO: think about better ways of logging state and microinstructions
+
 
 def main(program_file: str, input_file: str) -> None:
     with open(program_file, "r") as f:
