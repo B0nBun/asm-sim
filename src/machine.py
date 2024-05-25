@@ -7,7 +7,7 @@ import logging
 # TODO: think about better ways of logging state and microinstructions
 
 def main(program_file: str, input_file: str) -> None:
-    with open(program_file, "rb") as f:
+    with open(program_file, "r") as f:
         program = isa.read_program(f)
 
     with open(input_file, encoding="ascii") as f:

@@ -1,27 +1,26 @@
 from __future__ import annotations
+import isa
+import sys
+import json
 from typing import Generator, Optional
 import lexer as lex
-import isa
 import math
-import sys
-
 
 def main(source: str, out_target: str) -> None:
     with open(source, "r") as f:
         input = f.read()
-    program = translate(input)
-    with open(out_target, "wb") as f:
-        isa.write_program(program, f)
+    program = parse(input)
+    with open(out_target, "w") as f:
+        json.dump(program, f, cls=isa.ProgramEncoder)
 
-
-def translate(input: str) -> isa.Program:
+def parse(input: str) -> isa.Program:
     l = lex.Lexer.new(input)
     tokens = l.run()
     for token in tokens:
         assert token.type != lex.TokenType.ERROR, f"Lexer error: {token.literal}"
     labels = labels_from_tokens(tokens)
     assert "start" in labels, "No 'start' label in the program"
-    instructions = instructions_from_tokens(tokens, labels)
+    instructions = parse_instructions(tokens, labels)
     return isa.Program(start=labels["start"], instructions=instructions)
 
 
@@ -33,7 +32,7 @@ def labels_from_tokens(tokens: list[lex.Token]) -> dict[str, int]:
     return labels
 
 
-def instructions_from_tokens(tokens: list[lex.Token], labels: dict[str, int]) -> list[isa.MemoryWord]:
+def parse_instructions(tokens: list[lex.Token], labels: dict[str, int]) -> list[isa.MemoryWord]:
     program: list[isa.MemoryWord] = []
     while len(tokens) > 0:
         token = tokens.pop(0)

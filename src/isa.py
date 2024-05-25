@@ -1,8 +1,9 @@
-from typing import NamedTuple, TypeAlias, Final, Generator, Optional, BinaryIO, Callable, NewType, Union
+from typing import NamedTuple, TypeAlias, Final, Generator, Optional, TextIO, Callable, NewType, Union
 from enum import Enum
 from utils import iota, iota_reset
 import math
 import pickle
+import json
 
 GEN_REG_N: Final[int] = 6
 AR = GEN_REG_N
@@ -160,11 +161,35 @@ class Program(NamedTuple):
     instructions: list[MemoryWord]
 
 
-def write_program(program: Program, out: BinaryIO) -> None:
-    pickle.dump(program, out)
+class ProgramEncoder(json.JSONEncoder):
+    def default(self, obj: Op | object) -> object:
+        if isinstance(obj, Op):
+            return obj.code()
+        return super().default(obj)
+
+def instruction_from_tuple(tup: tuple[int, ...]) -> Instruction:
+    op = next(op for op in Op if op.code() == tup[0])
+    assert op is not None, f"Unknown opcode '{tup[0]}'"
+    match op.type(), tup[1:]:
+        case OpType.RRR, ([int(r1)], [int(r2)], [int(r3)]): 
+            return (op, RegArg(r1), RegArg(r2), RegArg(r3))
+        case OpType.RRI, ([int(r1)], [int(r2)], [int(im)]): 
+            return (op, RegArg(r1), RegArg(r2), ImmArg(im))
+        case OpType.NOARG, ():
+            return (op,)
+    assert False, f"Unknown serialized instruction {tup}"
+
+def write_program(program: Program, out: TextIO) -> None:
+    json.dump(program, out, cls=ProgramEncoder)
 
 
-def read_program(src: BinaryIO) -> Program:
-    loaded = pickle.load(src)
-    assert isinstance(loaded, Program), f"Expected to read a program, but got {loaded.__class__}"
-    return loaded
+def read_program(src: TextIO) -> Program:
+    loaded = json.load(src)
+    start, words = loaded
+    instructions: list[MemoryWord] = []
+    for word in words:
+        if isinstance(word, int):
+            instructions.append(word)
+        else:
+            instructions.append(instruction_from_tuple(tuple(word)))
+    return Program(start, instructions)
