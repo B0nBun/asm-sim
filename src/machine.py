@@ -103,7 +103,7 @@ class ControlUnit:
         self.data_path = data_path
         self._tick = 0
 
-    def tick() -> None:
+    def tick(self) -> None:
         self._tick += 1
 
     def signal_latch_mpc(self, mpc_sel: int) -> None:
