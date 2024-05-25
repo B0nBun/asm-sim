@@ -3,10 +3,12 @@ import sys
 
 _iota_cnt = 0
 
+
 def iota() -> int:
     global _iota_cnt
     _iota_cnt += 1
     return _iota_cnt
+
 
 def iota_reset() -> int:
     global _iota_cnt

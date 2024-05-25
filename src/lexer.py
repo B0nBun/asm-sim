@@ -5,6 +5,7 @@ import re
 from enum import Enum
 import sys
 
+
 def main(source: str) -> None:
     input = ""
     with open(source, "r") as f:
@@ -52,7 +53,7 @@ class Lexer:
 
     @staticmethod
     def new(input: str) -> Lexer:
-        without_comments = '\n'.join(line.partition(";")[0] for line in input.splitlines())
+        without_comments = "\n".join(line.partition(";")[0] for line in input.splitlines())
         l = Lexer(input=without_comments, start=0, pos=0, tokens=[])
         return l
 

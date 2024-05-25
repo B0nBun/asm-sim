@@ -3,6 +3,7 @@ import sys
 from microcode import microcode
 import isa
 
+
 def main(program_file: str, input_file: str) -> None:
     with open(program_file, "rb") as f:
         program = isa.read_program(f)
@@ -36,7 +37,9 @@ class DataPath:
     output_buffer: list[int]
 
     def __init__(self, program: isa.Program, input_buffer: list[int]) -> None:
-        self.memory = [0] * isa.ORIGIN + program.instructions + [0] * (isa.MEMORY_SIZE - len(program.instructions) - isa.ORIGIN)
+        self.memory = (
+            [0] * isa.ORIGIN + program.instructions + [0] * (isa.MEMORY_SIZE - len(program.instructions) - isa.ORIGIN)
+        )
         self.registers = [0] * isa.REG_N
         self.registers[isa.PC] = program.start
         self.carry = False
@@ -89,7 +92,7 @@ class DataPath:
         assert _valid_register(reg), f"Unexpected register '{reg}'"
         if reg != 0:
             self.registers[reg] = val
-    
+
 
 class ControlUnit:
     microcode: list[isa.MInstruction]
@@ -130,7 +133,7 @@ class ControlUnit:
         if minstr.if_op[1] != -1:
             assert isinstance(alu_result, tuple), f"Expected instruction, got data: '{alu_result}'"
             if alu_result[0] == minstr.if_op[0]:
-                return minstr.if_op[1]   
+                return minstr.if_op[1]
         return self.mpc + 1
 
     def _execute_operation_mi(self, minstr: isa.MIOperation) -> None:
@@ -142,8 +145,10 @@ class ControlUnit:
         if minstr.halt:
             raise StopIteration("Got halt signal")
 
+
 def _valid_register(reg: int) -> bool:
     return 0 <= reg and reg < isa.REG_N
+
 
 if __name__ == "__main__":
     assert len(sys.argv) == 3

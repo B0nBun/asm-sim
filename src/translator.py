@@ -13,6 +13,7 @@ def main(source: str, out_target: str) -> None:
     with open(out_target, "wb") as f:
         isa.write_program(program, f)
 
+
 def translate(input: str) -> isa.Program:
     l = lex.Lexer.new(input)
     tokens = l.run()
@@ -32,9 +33,7 @@ def labels_from_tokens(tokens: list[lex.Token]) -> dict[str, int]:
     return labels
 
 
-def instructions_from_tokens(
-    tokens: list[lex.Token], labels: dict[str, int]
-) -> list[isa.MemoryWord]:
+def instructions_from_tokens(tokens: list[lex.Token], labels: dict[str, int]) -> list[isa.MemoryWord]:
     program: list[isa.MemoryWord] = []
     while len(tokens) > 0:
         token = tokens.pop(0)

@@ -5,15 +5,15 @@ import math
 import pickle
 
 GEN_REG_N: Final[int] = 6
-AR  = GEN_REG_N
-DR  = GEN_REG_N + iota()
-PC  = GEN_REG_N + iota()
+AR = GEN_REG_N
+DR = GEN_REG_N + iota()
+PC = GEN_REG_N + iota()
 OR1 = GEN_REG_N + iota()
 OR2 = GEN_REG_N + iota()
 OR3 = GEN_REG_N + iota()
 REG_N = GEN_REG_N + iota_reset()
 IND_AR = -1
-IND_AR_MASK = pow(2, math.ceil(math.log(REG_N)/math.log(2))) - 1
+IND_AR_MASK = pow(2, math.ceil(math.log(REG_N) / math.log(2))) - 1
 
 ORIGIN: Final[int] = 0
 MEMORY_SIZE = 0xFFFF
@@ -24,10 +24,12 @@ PREDEFINED_LABELS: Final[dict[str, int]] = {
     "output": OUTPUT_DEVICE_ADDR,
 }
 
+
 class OpType(Enum):
     RRI = iota()
     RRR = iota()
     NOARG = iota_reset()
+
 
 class Op(Enum):
     LW = iota(), OpType.RRI
@@ -45,11 +47,14 @@ class Op(Enum):
     def type(self) -> OpType:
         return self.value[1]
 
+
 class ImmArg(NamedTuple):
     val: int
 
+
 class RegArg(NamedTuple):
     idx: int
+
 
 Instruction: TypeAlias = Union[
     tuple[Op, RegArg, RegArg, ImmArg],
@@ -57,14 +62,20 @@ Instruction: TypeAlias = Union[
     tuple[Op],
 ]
 
+
 def instruction_from_args(op: Op, args: list[ImmArg | RegArg]) -> Instruction:
     match op.type(), args:
-        case OpType.RRR, [RegArg(_) as r1, RegArg(_) as r2, RegArg(_) as r3]: return (op, r1, r2, r3)
-        case OpType.RRI, [RegArg(_) as r1, RegArg(_) as r2, ImmArg(_) as im]: return (op, r1, r2, im)
-        case OpType.NOARG, []: return (op,)
+        case OpType.RRR, [RegArg(_) as r1, RegArg(_) as r2, RegArg(_) as r3]:
+            return (op, r1, r2, r3)
+        case OpType.RRI, [RegArg(_) as r1, RegArg(_) as r2, ImmArg(_) as im]:
+            return (op, r1, r2, im)
+        case OpType.NOARG, []:
+            return (op,)
     assert False, f"Got unexpected arguments for op {op} ({args})"
 
+
 MemoryWord: TypeAlias = Instruction | int
+
 
 class ALUControl(Enum):
     add = 0
@@ -79,26 +90,37 @@ class ALUControl(Enum):
 
     def call(self, x: MemoryWord, y: MemoryWord) -> tuple[MemoryWord, bool]:
         match self, x, y:
-            case ALUControl.add        , int(x)              , int(y): return (x + y, x + y > 0xFFFFFFFF)
-            case ALUControl.shr        , int(x)              , int(y): return (x >> y, False)
-            case ALUControl.inc        , int(x)              , _     : return (x + 1, x + 1 > 0xFFFFFFFF)
-            case ALUControl.sub        , int(x)              , int(y): return (x - y, x < y)
-            case ALUControl.only_x     , x                   , _     : return (x, False)
-            case ALUControl.mask_fst_r , (_, RegArg(r), _, _), _     : return (r, False)
-            case ALUControl.mask_snd_r , (_, _, RegArg(r), _), _     : return (r, False)
-            case ALUControl.mask_thrd_r, (_, _, _, RegArg(r)), _     : return (r, False)
-            case ALUControl.mask_imm   , (_, _, _, ImmArg(n)), _     : return (n, False)
+            case ALUControl.add, int(x), int(y):
+                return (x + y, x + y > 0xFFFFFFFF)
+            case ALUControl.shr, int(x), int(y):
+                return (x >> y, False)
+            case ALUControl.inc, int(x), _:
+                return (x + 1, x + 1 > 0xFFFFFFFF)
+            case ALUControl.sub, int(x), int(y):
+                return (x - y, x < y)
+            case ALUControl.only_x, x, _:
+                return (x, False)
+            case ALUControl.mask_fst_r, (_, RegArg(r), _, _), _:
+                return (r, False)
+            case ALUControl.mask_snd_r, (_, _, RegArg(r), _), _:
+                return (r, False)
+            case ALUControl.mask_thrd_r, (_, _, _, RegArg(r)), _:
+                return (r, False)
+            case ALUControl.mask_imm, (_, _, _, ImmArg(n)), _:
+                return (n, False)
         assert False, f"Unreachable: '{self}' '{x}' '{y}'"
+
 
 class MIJump(NamedTuple):
     x_sel: int = 0
     y_sel: int = 0
     alu_ctrl: ALUControl = ALUControl.only_x
-    
+
     if_zero: int = -1
     if_carry: int = -1
     if_op: tuple[Op, int] = (Op.HALT, -1)
     to: int = -1
+
 
 class MIOperation(NamedTuple):
     x_sel: int = 0
@@ -109,14 +131,18 @@ class MIOperation(NamedTuple):
     mem_rd: bool = False
     halt: bool = False
 
+
 MInstruction: TypeAlias = MIOperation | MIJump
+
 
 class Program(NamedTuple):
     start: int
     instructions: list[MemoryWord]
 
+
 def write_program(program: Program, out: BinaryIO) -> None:
     pickle.dump(program, out)
+
 
 def read_program(src: BinaryIO) -> Program:
     loaded = pickle.load(src)
