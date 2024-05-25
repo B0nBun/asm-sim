@@ -1,8 +1,9 @@
+from __future__ import annotations
+
 import json
 import math
-import pickle
 from enum import Enum
-from typing import Callable, Final, Generator, NamedTuple, NewType, Optional, TextIO, TypeAlias, Union
+from typing import Final, NamedTuple, TextIO, TypeAlias, Union
 
 from utils import iota, iota_reset
 
@@ -179,9 +180,9 @@ def instruction_from_tuple(tup: tuple[int, ...]) -> Instruction:
     assert op is not None, f"Unknown opcode '{tup[0]}'"
     match op.type(), tup[1:]:
         case OpType.RRR, ([int(r1)], [int(r2)], [int(r3)]):
-            return (op, RegArg(r1), RegArg(r2), RegArg(r3)) # type: ignore[has-type]
+            return (op, RegArg(r1), RegArg(r2), RegArg(r3))  # type: ignore[has-type]
         case OpType.RRI, ([int(r1)], [int(r2)], [int(im)]):
-            return (op, RegArg(r1), RegArg(r2), ImmArg(im)) # type: ignore[has-type]
+            return (op, RegArg(r1), RegArg(r2), ImmArg(im))  # type: ignore[has-type]
         case OpType.NOARG, ():
             return (op,)
     assert False, f"Unknown serialized instruction {tup}"

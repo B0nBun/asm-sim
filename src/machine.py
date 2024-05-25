@@ -1,6 +1,7 @@
+from __future__ import annotations
+
 import logging
 import sys
-from enum import Enum, auto
 
 import isa
 from microcode import microcode
@@ -9,7 +10,7 @@ from microcode import microcode
 
 
 def main(program_file: str, input_file: str) -> None:
-    with open(program_file, "r") as f:
+    with open(program_file) as f:
         program = isa.read_program(f)
 
     with open(input_file, encoding="ascii") as f:
@@ -65,7 +66,8 @@ class DataPath:
     def signal_mem_wr(self) -> None:
         address = self.registers[isa.AR]
         data = self.registers[isa.DR]
-        assert isinstance(address, int) and isinstance(data, int), "Expected data, but got instruction"
+        assert isinstance(address, int), f"Expected data, but got instruction: {address}"
+        assert isinstance(data, int), f"Expected data, but got instruction: {data}"
         if address == isa.OUTPUT_DEVICE_ADDR:
             char = data & 0xFF
             logging.debug("output: %s", chr(char))
@@ -106,9 +108,8 @@ class DataPath:
 def memory_word_repr(word: isa.MemoryWord) -> str:
     if isinstance(word, int):
         return f"{word:4}"
-    else:
-        [op, *args] = word
-        return f"{op.name:4}"
+    [op, *args] = word
+    return f"{op.name:4}"
 
 
 class ControlUnit:
@@ -166,7 +167,6 @@ class ControlUnit:
     def __repr__(self) -> str:
         registers_repr = ", ".join(memory_word_repr(word) for word in self.data_path.registers)
         state_repr = f"tick:{self._tick:3} mpc:{self.mpc:3} regs:{registers_repr}"
-        minstr = self.microcode[self.mpc]
         return f"{state_repr}"
 
 

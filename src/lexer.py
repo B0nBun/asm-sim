@@ -4,14 +4,14 @@ import re
 import sys
 from dataclasses import dataclass
 from enum import Enum
-from typing import Callable, Final, Generator, NamedTuple, Optional, Sequence, TypeAlias
+from typing import Callable, Final, NamedTuple, Optional, TypeAlias
 
 
 def main(source: str) -> None:
-    input = ""
-    with open(source, "r") as f:
-        input = f.read()
-    lexer = Lexer.new(input)
+    inp = ""
+    with open(source) as f:
+        inp = f.read()
+    lexer = Lexer.new(inp)
     tokens = lexer.run()
     for token in tokens:
         if token.type == TokenType.ERROR:
@@ -53,10 +53,9 @@ class Lexer:
     EOF: Final[str] = "\0"
 
     @staticmethod
-    def new(input: str) -> Lexer:
-        without_comments = "\n".join(line.partition(";")[0] for line in input.splitlines())
-        l = Lexer(input=without_comments, start=0, pos=0, tokens=[])
-        return l
+    def new(inp: str) -> Lexer:
+        without_comments = "\n".join(line.partition(";")[0] for line in inp.splitlines())
+        return Lexer(input=without_comments, start=0, pos=0, tokens=[])
 
     @staticmethod
     def lex_label_or_op_or_str(l: Lexer) -> Optional[StateFn]:
@@ -179,11 +178,11 @@ class Lexer:
         return False
 
     def _accept_run(self, valid: Callable[[str], bool]) -> int:
-        len = 0
+        length = 0
         while valid(self._next()):
-            len += 1
+            length += 1
         self._backup()
-        return len
+        return length
 
     def _skip(self, skip: Callable[[str], bool]) -> bool:
         skipped = self._accept(skip)

@@ -20,6 +20,14 @@ ruff = "^0.1.3"
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.mypy]
+files = "src/**/*.py"
+strict = true
+strict_optional = true
+warn_return_any = true
+warn_unused_configs = true
+
+
 [tool.pytest.ini_options]
 enable_assertion_pass_hook = true
 addopts = "--doctest-modules"
@@ -88,6 +96,10 @@ ignore = [
     # to simplify code for non-Python programmers
     "PTH118", # `os.path.join()` should be replaced by `Path` with `/` operator
     "UP032",  # [*] Use f-string instead of `format` call
+    "PT015",
+    "E741",
+    "UP007",
+    "TRY003",
 ]
 unfixable = [
     "ERA001", # prohibit to "auto-fix" (=remove) commented-out code

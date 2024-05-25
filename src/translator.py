@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import math
 import sys
 from typing import Generator, Optional
 
@@ -10,15 +9,15 @@ import lexer as lex
 
 
 def main(source: str, out_target: str) -> None:
-    with open(source, "r") as f:
-        input = f.read()
-    program = parse(input)
+    with open(source) as f:
+        inp = f.read()
+    program = parse(inp)
     with open(out_target, "w") as f:
         json.dump(program, f, cls=isa.ProgramEncoder)
 
 
-def parse(input: str) -> isa.Program:
-    l = lex.Lexer.new(input)
+def parse(inp: str) -> isa.Program:
+    l = lex.Lexer.new(inp)
     tokens = l.run()
     for token in tokens:
         assert token.type != lex.TokenType.ERROR, f"Lexer error: {token.literal}"
@@ -74,9 +73,9 @@ def string_token_to_words(token: lex.Token) -> list[isa.MemoryWord]:
     words: list[isa.MemoryWord] = []
     escaped = token.literal[1:-1].encode("raw_unicode_escape").decode("unicode_escape")
     for i in range(0, len(escaped)):
-        ascii = ord(escaped[i])
-        assert ascii <= 255, "Only ASCII characters in string literals"
-        words.append(ascii)
+        char = ord(escaped[i])
+        assert char <= 255, "Only ASCII characters in string literals"
+        words.append(char)
     return words
 
 
@@ -91,7 +90,7 @@ def arguments_from_tokens(
             args.append(isa.ImmArg(addr))
         elif token.type == lex.TokenType.ARG_REG:
             idx = int(token.literal[1:])
-            assert 0 <= idx and idx < isa.GEN_REG_N, f"Undefined register ${idx} used"
+            assert 0 <= idx < isa.GEN_REG_N, f"Undefined register ${idx} used"
             args.append(isa.RegArg(idx))
         elif token.type == lex.TokenType.ARG_UINT:
             num = int(token.literal)

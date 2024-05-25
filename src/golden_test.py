@@ -1,17 +1,22 @@
+from __future__ import annotations
+
 import contextlib
 import io
 import logging
 import os
 import tempfile
 
-import machine
 import pytest
-import pytest_golden # type: ignore[import-untyped]
+import pytest_golden  # type: ignore[import-untyped]
+
+import machine
 import translator
 
 
 @pytest.mark.golden_test("golden/*.yml")
-def test_translator_asm_and_machine(golden: pytest_golden.plugin.GoldenTestFixture, caplog: pytest.LogCaptureFixture) -> None:
+def test_translator_asm_and_machine(
+    golden: pytest_golden.plugin.GoldenTestFixture, caplog: pytest.LogCaptureFixture
+) -> None:
     print(golden.__class__)
     caplog.set_level(logging.DEBUG)
 
