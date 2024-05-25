@@ -5,7 +5,7 @@ from enum import Enum, auto
 import isa
 from microcode import microcode
 
-# TODO: think about better ways of logging state and microinstructions
+# TODO: think about better ways of logging state and microinstructions (also log translation i guess???)
 
 
 def main(program_file: str, input_file: str) -> None:
@@ -79,7 +79,7 @@ class DataPath:
         if address == isa.INPUT_DEVICE_ADDR:
             popped = 0 if len(self.input_buffer) == 0 else self.input_buffer.pop(0)
             read = popped & 0xFF
-            logging.debug("input: %s", chr(read))
+            logging.debug("input: %s", chr(read) if read != 0 else r"\0")
 
         self.registers[isa.DR] = read
 

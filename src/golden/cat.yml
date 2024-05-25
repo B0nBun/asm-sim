@@ -1,0 +1,1026 @@
+in_source: |-
+  start:
+  loop:
+        lw $1, $0, input
+        beq $1, $0, break
+        sw $1, $0, output
+        beq $0, $0, loop
+  break:
+        halt
+in_stdin: |-
+  cat test!
+out_code: |-
+  [0, [[1, [1], [0], [65280]], [3, [1], [0], [4]], [2, [1], [0], [65281]], [3, [0], [0], [0]], [9]]]
+out_stdout: |-
+  ============================================================
+  cat test!
+out_log: |
+  DEBUG   machine:simulation    tick:  0 mpc:  0 regs:   0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:  1 mpc:  1 regs:   0,    0,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:  2 mpc: 10 regs:   0,    0,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:  3 mpc: 11 regs:   0,    0,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:  4 mpc: 12 regs:   0,    0,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:  5 mpc: 13 regs:   0,    0,    0,    0,    0,    0,    0, LW  ,    0,    0,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $9
+  DEBUG   machine:simulation    tick:  6 mpc: 14 regs:   0,    0,    0,    0,    0,    0,    0, LW  ,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:add($10, $11) -> $6
+  DEBUG   machine:simulation    tick:  7 mpc: 15 regs:   0,    0,    0,    0,    0,    0, 65280, LW  ,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($0, $0) -> $0 RD
+  DEBUG   machine:signal_mem_rd input: c
+  DEBUG   machine:simulation    tick:  8 mpc: 16 regs:   0,    0,    0,    0,    0,    0, 65280,   99,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($9, $0) -> $6
+  DEBUG   machine:simulation    tick:  9 mpc: 17 regs:   0,    0,    0,    0,    0,    0,    1,   99,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($7, $0) -> $-1
+  DEBUG   machine:simulation    tick: 10 mpc: 18 regs:   0,   99,    0,    0,    0,    0,    1,   99,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jump 71
+  DEBUG   machine:simulation    tick: 11 mpc: 71 regs:   0,   99,    0,    0,    0,    0,    1,   99,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:inc($8, $0) -> $8
+  DEBUG   machine:simulation    tick: 12 mpc: 72 regs:   0,   99,    0,    0,    0,    0,    1,   99,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick: 13 mpc:  0 regs:   0,   99,    0,    0,    0,    0,    1,   99,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick: 14 mpc:  1 regs:   0,   99,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick: 15 mpc:  2 regs:   0,   99,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick: 16 mpc:  3 regs:   0,   99,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) BEQ -> 27
+  DEBUG   machine:simulation    tick: 17 mpc: 27 regs:   0,   99,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick: 18 mpc: 28 regs:   0,   99,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $9
+  DEBUG   machine:simulation    tick: 19 mpc: 29 regs:   0,   99,    0,    0,    0,    0,    1, BEQ ,    1,   99,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick: 20 mpc: 30 regs:   0,   99,    0,    0,    0,    0,    0, BEQ ,    1,   99,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick: 21 mpc: 31 regs:   0,   99,    0,    0,    0,    0,    0, BEQ ,    1,   99,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick: 22 mpc: 32 regs:   0,   99,    0,    0,    0,    0,    0, BEQ ,    1,   99,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:sub(9, 10) Z -> 34
+  DEBUG   machine:simulation    tick: 23 mpc: 33 regs:   0,   99,    0,    0,    0,    0,    0, BEQ ,    1,   99,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jump 71
+  DEBUG   machine:simulation    tick: 24 mpc: 71 regs:   0,   99,    0,    0,    0,    0,    0, BEQ ,    1,   99,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:inc($8, $0) -> $8
+  DEBUG   machine:simulation    tick: 25 mpc: 72 regs:   0,   99,    0,    0,    0,    0,    0, BEQ ,    2,   99,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick: 26 mpc:  0 regs:   0,   99,    0,    0,    0,    0,    0, BEQ ,    2,   99,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick: 27 mpc:  1 regs:   0,   99,    0,    0,    0,    0,    2, SW  ,    2,   99,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick: 28 mpc:  2 regs:   0,   99,    0,    0,    0,    0,    2, SW  ,    2,   99,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick: 29 mpc: 19 regs:   0,   99,    0,    0,    0,    0,    2, SW  ,    2,   99,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick: 30 mpc: 20 regs:   0,   99,    0,    0,    0,    0,    1, SW  ,    2,   99,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $9
+  DEBUG   machine:simulation    tick: 31 mpc: 21 regs:   0,   99,    0,    0,    0,    0,    1, SW  ,    2,   99,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick: 32 mpc: 22 regs:   0,   99,    0,    0,    0,    0,    0, SW  ,    2,   99,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick: 33 mpc: 23 regs:   0,   99,    0,    0,    0,    0,    0, SW  ,    2,   99,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick: 34 mpc: 24 regs:   0,   99,    0,    0,    0,    0,    0, SW  ,    2,   99,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:add($10, $11) -> $6
+  DEBUG   machine:simulation    tick: 35 mpc: 25 regs:   0,   99,    0,    0,    0,    0, 65281, SW  ,    2,   99,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($9, $0) -> $7 WR
+  DEBUG   machine:signal_mem_wr output: c
+  DEBUG   machine:simulation    tick: 36 mpc: 26 regs:   0,   99,    0,    0,    0,    0, 65281,   99,    2,   99,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jump 71
+  DEBUG   machine:simulation    tick: 37 mpc: 71 regs:   0,   99,    0,    0,    0,    0, 65281,   99,    2,   99,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:inc($8, $0) -> $8
+  DEBUG   machine:simulation    tick: 38 mpc: 72 regs:   0,   99,    0,    0,    0,    0, 65281,   99,    3,   99,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick: 39 mpc:  0 regs:   0,   99,    0,    0,    0,    0, 65281,   99,    3,   99,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick: 40 mpc:  1 regs:   0,   99,    0,    0,    0,    0,    3, BEQ ,    3,   99,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick: 41 mpc:  2 regs:   0,   99,    0,    0,    0,    0,    3, BEQ ,    3,   99,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick: 42 mpc:  3 regs:   0,   99,    0,    0,    0,    0,    3, BEQ ,    3,   99,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) BEQ -> 27
+  DEBUG   machine:simulation    tick: 43 mpc: 27 regs:   0,   99,    0,    0,    0,    0,    3, BEQ ,    3,   99,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick: 44 mpc: 28 regs:   0,   99,    0,    0,    0,    0,    0, BEQ ,    3,   99,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $9
+  DEBUG   machine:simulation    tick: 45 mpc: 29 regs:   0,   99,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick: 46 mpc: 30 regs:   0,   99,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick: 47 mpc: 31 regs:   0,   99,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick: 48 mpc: 32 regs:   0,   99,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:sub(9, 10) Z -> 34
+  DEBUG   machine:simulation    tick: 49 mpc: 34 regs:   0,   99,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($11, $0) -> $8
+  DEBUG   machine:simulation    tick: 50 mpc: 35 regs:   0,   99,    0,    0,    0,    0,    0, BEQ ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick: 51 mpc:  0 regs:   0,   99,    0,    0,    0,    0,    0, BEQ ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick: 52 mpc:  1 regs:   0,   99,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick: 53 mpc: 10 regs:   0,   99,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick: 54 mpc: 11 regs:   0,   99,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick: 55 mpc: 12 regs:   0,   99,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick: 56 mpc: 13 regs:   0,   99,    0,    0,    0,    0,    0, LW  ,    0,    0,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $9
+  DEBUG   machine:simulation    tick: 57 mpc: 14 regs:   0,   99,    0,    0,    0,    0,    0, LW  ,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:add($10, $11) -> $6
+  DEBUG   machine:simulation    tick: 58 mpc: 15 regs:   0,   99,    0,    0,    0,    0, 65280, LW  ,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($0, $0) -> $0 RD
+  DEBUG   machine:signal_mem_rd input: a
+  DEBUG   machine:simulation    tick: 59 mpc: 16 regs:   0,   99,    0,    0,    0,    0, 65280,   97,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($9, $0) -> $6
+  DEBUG   machine:simulation    tick: 60 mpc: 17 regs:   0,   99,    0,    0,    0,    0,    1,   97,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($7, $0) -> $-1
+  DEBUG   machine:simulation    tick: 61 mpc: 18 regs:   0,   97,    0,    0,    0,    0,    1,   97,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jump 71
+  DEBUG   machine:simulation    tick: 62 mpc: 71 regs:   0,   97,    0,    0,    0,    0,    1,   97,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:inc($8, $0) -> $8
+  DEBUG   machine:simulation    tick: 63 mpc: 72 regs:   0,   97,    0,    0,    0,    0,    1,   97,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick: 64 mpc:  0 regs:   0,   97,    0,    0,    0,    0,    1,   97,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick: 65 mpc:  1 regs:   0,   97,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick: 66 mpc:  2 regs:   0,   97,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick: 67 mpc:  3 regs:   0,   97,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) BEQ -> 27
+  DEBUG   machine:simulation    tick: 68 mpc: 27 regs:   0,   97,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick: 69 mpc: 28 regs:   0,   97,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $9
+  DEBUG   machine:simulation    tick: 70 mpc: 29 regs:   0,   97,    0,    0,    0,    0,    1, BEQ ,    1,   97,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick: 71 mpc: 30 regs:   0,   97,    0,    0,    0,    0,    0, BEQ ,    1,   97,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick: 72 mpc: 31 regs:   0,   97,    0,    0,    0,    0,    0, BEQ ,    1,   97,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick: 73 mpc: 32 regs:   0,   97,    0,    0,    0,    0,    0, BEQ ,    1,   97,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:sub(9, 10) Z -> 34
+  DEBUG   machine:simulation    tick: 74 mpc: 33 regs:   0,   97,    0,    0,    0,    0,    0, BEQ ,    1,   97,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jump 71
+  DEBUG   machine:simulation    tick: 75 mpc: 71 regs:   0,   97,    0,    0,    0,    0,    0, BEQ ,    1,   97,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:inc($8, $0) -> $8
+  DEBUG   machine:simulation    tick: 76 mpc: 72 regs:   0,   97,    0,    0,    0,    0,    0, BEQ ,    2,   97,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick: 77 mpc:  0 regs:   0,   97,    0,    0,    0,    0,    0, BEQ ,    2,   97,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick: 78 mpc:  1 regs:   0,   97,    0,    0,    0,    0,    2, SW  ,    2,   97,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick: 79 mpc:  2 regs:   0,   97,    0,    0,    0,    0,    2, SW  ,    2,   97,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick: 80 mpc: 19 regs:   0,   97,    0,    0,    0,    0,    2, SW  ,    2,   97,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick: 81 mpc: 20 regs:   0,   97,    0,    0,    0,    0,    1, SW  ,    2,   97,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $9
+  DEBUG   machine:simulation    tick: 82 mpc: 21 regs:   0,   97,    0,    0,    0,    0,    1, SW  ,    2,   97,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick: 83 mpc: 22 regs:   0,   97,    0,    0,    0,    0,    0, SW  ,    2,   97,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick: 84 mpc: 23 regs:   0,   97,    0,    0,    0,    0,    0, SW  ,    2,   97,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick: 85 mpc: 24 regs:   0,   97,    0,    0,    0,    0,    0, SW  ,    2,   97,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:add($10, $11) -> $6
+  DEBUG   machine:simulation    tick: 86 mpc: 25 regs:   0,   97,    0,    0,    0,    0, 65281, SW  ,    2,   97,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($9, $0) -> $7 WR
+  DEBUG   machine:signal_mem_wr output: a
+  DEBUG   machine:simulation    tick: 87 mpc: 26 regs:   0,   97,    0,    0,    0,    0, 65281,   97,    2,   97,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jump 71
+  DEBUG   machine:simulation    tick: 88 mpc: 71 regs:   0,   97,    0,    0,    0,    0, 65281,   97,    2,   97,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:inc($8, $0) -> $8
+  DEBUG   machine:simulation    tick: 89 mpc: 72 regs:   0,   97,    0,    0,    0,    0, 65281,   97,    3,   97,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick: 90 mpc:  0 regs:   0,   97,    0,    0,    0,    0, 65281,   97,    3,   97,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick: 91 mpc:  1 regs:   0,   97,    0,    0,    0,    0,    3, BEQ ,    3,   97,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick: 92 mpc:  2 regs:   0,   97,    0,    0,    0,    0,    3, BEQ ,    3,   97,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick: 93 mpc:  3 regs:   0,   97,    0,    0,    0,    0,    3, BEQ ,    3,   97,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) BEQ -> 27
+  DEBUG   machine:simulation    tick: 94 mpc: 27 regs:   0,   97,    0,    0,    0,    0,    3, BEQ ,    3,   97,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick: 95 mpc: 28 regs:   0,   97,    0,    0,    0,    0,    0, BEQ ,    3,   97,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $9
+  DEBUG   machine:simulation    tick: 96 mpc: 29 regs:   0,   97,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick: 97 mpc: 30 regs:   0,   97,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick: 98 mpc: 31 regs:   0,   97,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick: 99 mpc: 32 regs:   0,   97,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:sub(9, 10) Z -> 34
+  DEBUG   machine:simulation    tick:100 mpc: 34 regs:   0,   97,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($11, $0) -> $8
+  DEBUG   machine:simulation    tick:101 mpc: 35 regs:   0,   97,    0,    0,    0,    0,    0, BEQ ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:102 mpc:  0 regs:   0,   97,    0,    0,    0,    0,    0, BEQ ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:103 mpc:  1 regs:   0,   97,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:104 mpc: 10 regs:   0,   97,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:105 mpc: 11 regs:   0,   97,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:106 mpc: 12 regs:   0,   97,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:107 mpc: 13 regs:   0,   97,    0,    0,    0,    0,    0, LW  ,    0,    0,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $9
+  DEBUG   machine:simulation    tick:108 mpc: 14 regs:   0,   97,    0,    0,    0,    0,    0, LW  ,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:add($10, $11) -> $6
+  DEBUG   machine:simulation    tick:109 mpc: 15 regs:   0,   97,    0,    0,    0,    0, 65280, LW  ,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($0, $0) -> $0 RD
+  DEBUG   machine:signal_mem_rd input: t
+  DEBUG   machine:simulation    tick:110 mpc: 16 regs:   0,   97,    0,    0,    0,    0, 65280,  116,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($9, $0) -> $6
+  DEBUG   machine:simulation    tick:111 mpc: 17 regs:   0,   97,    0,    0,    0,    0,    1,  116,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($7, $0) -> $-1
+  DEBUG   machine:simulation    tick:112 mpc: 18 regs:   0,  116,    0,    0,    0,    0,    1,  116,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jump 71
+  DEBUG   machine:simulation    tick:113 mpc: 71 regs:   0,  116,    0,    0,    0,    0,    1,  116,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:inc($8, $0) -> $8
+  DEBUG   machine:simulation    tick:114 mpc: 72 regs:   0,  116,    0,    0,    0,    0,    1,  116,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:115 mpc:  0 regs:   0,  116,    0,    0,    0,    0,    1,  116,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:116 mpc:  1 regs:   0,  116,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:117 mpc:  2 regs:   0,  116,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick:118 mpc:  3 regs:   0,  116,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) BEQ -> 27
+  DEBUG   machine:simulation    tick:119 mpc: 27 regs:   0,  116,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:120 mpc: 28 regs:   0,  116,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $9
+  DEBUG   machine:simulation    tick:121 mpc: 29 regs:   0,  116,    0,    0,    0,    0,    1, BEQ ,    1,  116,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:122 mpc: 30 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    1,  116,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:123 mpc: 31 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    1,  116,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:124 mpc: 32 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    1,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:sub(9, 10) Z -> 34
+  DEBUG   machine:simulation    tick:125 mpc: 33 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    1,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jump 71
+  DEBUG   machine:simulation    tick:126 mpc: 71 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    1,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:inc($8, $0) -> $8
+  DEBUG   machine:simulation    tick:127 mpc: 72 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    2,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:128 mpc:  0 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    2,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:129 mpc:  1 regs:   0,  116,    0,    0,    0,    0,    2, SW  ,    2,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:130 mpc:  2 regs:   0,  116,    0,    0,    0,    0,    2, SW  ,    2,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick:131 mpc: 19 regs:   0,  116,    0,    0,    0,    0,    2, SW  ,    2,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:132 mpc: 20 regs:   0,  116,    0,    0,    0,    0,    1, SW  ,    2,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $9
+  DEBUG   machine:simulation    tick:133 mpc: 21 regs:   0,  116,    0,    0,    0,    0,    1, SW  ,    2,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:134 mpc: 22 regs:   0,  116,    0,    0,    0,    0,    0, SW  ,    2,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:135 mpc: 23 regs:   0,  116,    0,    0,    0,    0,    0, SW  ,    2,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:136 mpc: 24 regs:   0,  116,    0,    0,    0,    0,    0, SW  ,    2,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:add($10, $11) -> $6
+  DEBUG   machine:simulation    tick:137 mpc: 25 regs:   0,  116,    0,    0,    0,    0, 65281, SW  ,    2,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($9, $0) -> $7 WR
+  DEBUG   machine:signal_mem_wr output: t
+  DEBUG   machine:simulation    tick:138 mpc: 26 regs:   0,  116,    0,    0,    0,    0, 65281,  116,    2,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jump 71
+  DEBUG   machine:simulation    tick:139 mpc: 71 regs:   0,  116,    0,    0,    0,    0, 65281,  116,    2,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:inc($8, $0) -> $8
+  DEBUG   machine:simulation    tick:140 mpc: 72 regs:   0,  116,    0,    0,    0,    0, 65281,  116,    3,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:141 mpc:  0 regs:   0,  116,    0,    0,    0,    0, 65281,  116,    3,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:142 mpc:  1 regs:   0,  116,    0,    0,    0,    0,    3, BEQ ,    3,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:143 mpc:  2 regs:   0,  116,    0,    0,    0,    0,    3, BEQ ,    3,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick:144 mpc:  3 regs:   0,  116,    0,    0,    0,    0,    3, BEQ ,    3,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) BEQ -> 27
+  DEBUG   machine:simulation    tick:145 mpc: 27 regs:   0,  116,    0,    0,    0,    0,    3, BEQ ,    3,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:146 mpc: 28 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    3,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $9
+  DEBUG   machine:simulation    tick:147 mpc: 29 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:148 mpc: 30 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:149 mpc: 31 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:150 mpc: 32 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:sub(9, 10) Z -> 34
+  DEBUG   machine:simulation    tick:151 mpc: 34 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($11, $0) -> $8
+  DEBUG   machine:simulation    tick:152 mpc: 35 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:153 mpc:  0 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:154 mpc:  1 regs:   0,  116,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:155 mpc: 10 regs:   0,  116,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:156 mpc: 11 regs:   0,  116,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:157 mpc: 12 regs:   0,  116,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:158 mpc: 13 regs:   0,  116,    0,    0,    0,    0,    0, LW  ,    0,    0,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $9
+  DEBUG   machine:simulation    tick:159 mpc: 14 regs:   0,  116,    0,    0,    0,    0,    0, LW  ,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:add($10, $11) -> $6
+  DEBUG   machine:simulation    tick:160 mpc: 15 regs:   0,  116,    0,    0,    0,    0, 65280, LW  ,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($0, $0) -> $0 RD
+  DEBUG   machine:signal_mem_rd input:  
+  DEBUG   machine:simulation    tick:161 mpc: 16 regs:   0,  116,    0,    0,    0,    0, 65280,   32,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($9, $0) -> $6
+  DEBUG   machine:simulation    tick:162 mpc: 17 regs:   0,  116,    0,    0,    0,    0,    1,   32,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($7, $0) -> $-1
+  DEBUG   machine:simulation    tick:163 mpc: 18 regs:   0,   32,    0,    0,    0,    0,    1,   32,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jump 71
+  DEBUG   machine:simulation    tick:164 mpc: 71 regs:   0,   32,    0,    0,    0,    0,    1,   32,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:inc($8, $0) -> $8
+  DEBUG   machine:simulation    tick:165 mpc: 72 regs:   0,   32,    0,    0,    0,    0,    1,   32,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:166 mpc:  0 regs:   0,   32,    0,    0,    0,    0,    1,   32,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:167 mpc:  1 regs:   0,   32,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:168 mpc:  2 regs:   0,   32,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick:169 mpc:  3 regs:   0,   32,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) BEQ -> 27
+  DEBUG   machine:simulation    tick:170 mpc: 27 regs:   0,   32,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:171 mpc: 28 regs:   0,   32,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $9
+  DEBUG   machine:simulation    tick:172 mpc: 29 regs:   0,   32,    0,    0,    0,    0,    1, BEQ ,    1,   32,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:173 mpc: 30 regs:   0,   32,    0,    0,    0,    0,    0, BEQ ,    1,   32,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:174 mpc: 31 regs:   0,   32,    0,    0,    0,    0,    0, BEQ ,    1,   32,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:175 mpc: 32 regs:   0,   32,    0,    0,    0,    0,    0, BEQ ,    1,   32,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:sub(9, 10) Z -> 34
+  DEBUG   machine:simulation    tick:176 mpc: 33 regs:   0,   32,    0,    0,    0,    0,    0, BEQ ,    1,   32,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jump 71
+  DEBUG   machine:simulation    tick:177 mpc: 71 regs:   0,   32,    0,    0,    0,    0,    0, BEQ ,    1,   32,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:inc($8, $0) -> $8
+  DEBUG   machine:simulation    tick:178 mpc: 72 regs:   0,   32,    0,    0,    0,    0,    0, BEQ ,    2,   32,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:179 mpc:  0 regs:   0,   32,    0,    0,    0,    0,    0, BEQ ,    2,   32,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:180 mpc:  1 regs:   0,   32,    0,    0,    0,    0,    2, SW  ,    2,   32,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:181 mpc:  2 regs:   0,   32,    0,    0,    0,    0,    2, SW  ,    2,   32,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick:182 mpc: 19 regs:   0,   32,    0,    0,    0,    0,    2, SW  ,    2,   32,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:183 mpc: 20 regs:   0,   32,    0,    0,    0,    0,    1, SW  ,    2,   32,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $9
+  DEBUG   machine:simulation    tick:184 mpc: 21 regs:   0,   32,    0,    0,    0,    0,    1, SW  ,    2,   32,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:185 mpc: 22 regs:   0,   32,    0,    0,    0,    0,    0, SW  ,    2,   32,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:186 mpc: 23 regs:   0,   32,    0,    0,    0,    0,    0, SW  ,    2,   32,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:187 mpc: 24 regs:   0,   32,    0,    0,    0,    0,    0, SW  ,    2,   32,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:add($10, $11) -> $6
+  DEBUG   machine:simulation    tick:188 mpc: 25 regs:   0,   32,    0,    0,    0,    0, 65281, SW  ,    2,   32,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($9, $0) -> $7 WR
+  DEBUG   machine:signal_mem_wr output:  
+  DEBUG   machine:simulation    tick:189 mpc: 26 regs:   0,   32,    0,    0,    0,    0, 65281,   32,    2,   32,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jump 71
+  DEBUG   machine:simulation    tick:190 mpc: 71 regs:   0,   32,    0,    0,    0,    0, 65281,   32,    2,   32,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:inc($8, $0) -> $8
+  DEBUG   machine:simulation    tick:191 mpc: 72 regs:   0,   32,    0,    0,    0,    0, 65281,   32,    3,   32,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:192 mpc:  0 regs:   0,   32,    0,    0,    0,    0, 65281,   32,    3,   32,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:193 mpc:  1 regs:   0,   32,    0,    0,    0,    0,    3, BEQ ,    3,   32,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:194 mpc:  2 regs:   0,   32,    0,    0,    0,    0,    3, BEQ ,    3,   32,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick:195 mpc:  3 regs:   0,   32,    0,    0,    0,    0,    3, BEQ ,    3,   32,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) BEQ -> 27
+  DEBUG   machine:simulation    tick:196 mpc: 27 regs:   0,   32,    0,    0,    0,    0,    3, BEQ ,    3,   32,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:197 mpc: 28 regs:   0,   32,    0,    0,    0,    0,    0, BEQ ,    3,   32,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $9
+  DEBUG   machine:simulation    tick:198 mpc: 29 regs:   0,   32,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:199 mpc: 30 regs:   0,   32,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:200 mpc: 31 regs:   0,   32,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:201 mpc: 32 regs:   0,   32,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:sub(9, 10) Z -> 34
+  DEBUG   machine:simulation    tick:202 mpc: 34 regs:   0,   32,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($11, $0) -> $8
+  DEBUG   machine:simulation    tick:203 mpc: 35 regs:   0,   32,    0,    0,    0,    0,    0, BEQ ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:204 mpc:  0 regs:   0,   32,    0,    0,    0,    0,    0, BEQ ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:205 mpc:  1 regs:   0,   32,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:206 mpc: 10 regs:   0,   32,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:207 mpc: 11 regs:   0,   32,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:208 mpc: 12 regs:   0,   32,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:209 mpc: 13 regs:   0,   32,    0,    0,    0,    0,    0, LW  ,    0,    0,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $9
+  DEBUG   machine:simulation    tick:210 mpc: 14 regs:   0,   32,    0,    0,    0,    0,    0, LW  ,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:add($10, $11) -> $6
+  DEBUG   machine:simulation    tick:211 mpc: 15 regs:   0,   32,    0,    0,    0,    0, 65280, LW  ,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($0, $0) -> $0 RD
+  DEBUG   machine:signal_mem_rd input: t
+  DEBUG   machine:simulation    tick:212 mpc: 16 regs:   0,   32,    0,    0,    0,    0, 65280,  116,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($9, $0) -> $6
+  DEBUG   machine:simulation    tick:213 mpc: 17 regs:   0,   32,    0,    0,    0,    0,    1,  116,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($7, $0) -> $-1
+  DEBUG   machine:simulation    tick:214 mpc: 18 regs:   0,  116,    0,    0,    0,    0,    1,  116,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jump 71
+  DEBUG   machine:simulation    tick:215 mpc: 71 regs:   0,  116,    0,    0,    0,    0,    1,  116,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:inc($8, $0) -> $8
+  DEBUG   machine:simulation    tick:216 mpc: 72 regs:   0,  116,    0,    0,    0,    0,    1,  116,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:217 mpc:  0 regs:   0,  116,    0,    0,    0,    0,    1,  116,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:218 mpc:  1 regs:   0,  116,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:219 mpc:  2 regs:   0,  116,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick:220 mpc:  3 regs:   0,  116,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) BEQ -> 27
+  DEBUG   machine:simulation    tick:221 mpc: 27 regs:   0,  116,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:222 mpc: 28 regs:   0,  116,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $9
+  DEBUG   machine:simulation    tick:223 mpc: 29 regs:   0,  116,    0,    0,    0,    0,    1, BEQ ,    1,  116,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:224 mpc: 30 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    1,  116,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:225 mpc: 31 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    1,  116,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:226 mpc: 32 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    1,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:sub(9, 10) Z -> 34
+  DEBUG   machine:simulation    tick:227 mpc: 33 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    1,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jump 71
+  DEBUG   machine:simulation    tick:228 mpc: 71 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    1,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:inc($8, $0) -> $8
+  DEBUG   machine:simulation    tick:229 mpc: 72 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    2,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:230 mpc:  0 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    2,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:231 mpc:  1 regs:   0,  116,    0,    0,    0,    0,    2, SW  ,    2,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:232 mpc:  2 regs:   0,  116,    0,    0,    0,    0,    2, SW  ,    2,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick:233 mpc: 19 regs:   0,  116,    0,    0,    0,    0,    2, SW  ,    2,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:234 mpc: 20 regs:   0,  116,    0,    0,    0,    0,    1, SW  ,    2,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $9
+  DEBUG   machine:simulation    tick:235 mpc: 21 regs:   0,  116,    0,    0,    0,    0,    1, SW  ,    2,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:236 mpc: 22 regs:   0,  116,    0,    0,    0,    0,    0, SW  ,    2,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:237 mpc: 23 regs:   0,  116,    0,    0,    0,    0,    0, SW  ,    2,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:238 mpc: 24 regs:   0,  116,    0,    0,    0,    0,    0, SW  ,    2,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:add($10, $11) -> $6
+  DEBUG   machine:simulation    tick:239 mpc: 25 regs:   0,  116,    0,    0,    0,    0, 65281, SW  ,    2,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($9, $0) -> $7 WR
+  DEBUG   machine:signal_mem_wr output: t
+  DEBUG   machine:simulation    tick:240 mpc: 26 regs:   0,  116,    0,    0,    0,    0, 65281,  116,    2,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jump 71
+  DEBUG   machine:simulation    tick:241 mpc: 71 regs:   0,  116,    0,    0,    0,    0, 65281,  116,    2,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:inc($8, $0) -> $8
+  DEBUG   machine:simulation    tick:242 mpc: 72 regs:   0,  116,    0,    0,    0,    0, 65281,  116,    3,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:243 mpc:  0 regs:   0,  116,    0,    0,    0,    0, 65281,  116,    3,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:244 mpc:  1 regs:   0,  116,    0,    0,    0,    0,    3, BEQ ,    3,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:245 mpc:  2 regs:   0,  116,    0,    0,    0,    0,    3, BEQ ,    3,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick:246 mpc:  3 regs:   0,  116,    0,    0,    0,    0,    3, BEQ ,    3,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) BEQ -> 27
+  DEBUG   machine:simulation    tick:247 mpc: 27 regs:   0,  116,    0,    0,    0,    0,    3, BEQ ,    3,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:248 mpc: 28 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    3,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $9
+  DEBUG   machine:simulation    tick:249 mpc: 29 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:250 mpc: 30 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:251 mpc: 31 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:252 mpc: 32 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:sub(9, 10) Z -> 34
+  DEBUG   machine:simulation    tick:253 mpc: 34 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($11, $0) -> $8
+  DEBUG   machine:simulation    tick:254 mpc: 35 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:255 mpc:  0 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:256 mpc:  1 regs:   0,  116,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:257 mpc: 10 regs:   0,  116,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:258 mpc: 11 regs:   0,  116,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:259 mpc: 12 regs:   0,  116,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:260 mpc: 13 regs:   0,  116,    0,    0,    0,    0,    0, LW  ,    0,    0,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $9
+  DEBUG   machine:simulation    tick:261 mpc: 14 regs:   0,  116,    0,    0,    0,    0,    0, LW  ,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:add($10, $11) -> $6
+  DEBUG   machine:simulation    tick:262 mpc: 15 regs:   0,  116,    0,    0,    0,    0, 65280, LW  ,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($0, $0) -> $0 RD
+  DEBUG   machine:signal_mem_rd input: e
+  DEBUG   machine:simulation    tick:263 mpc: 16 regs:   0,  116,    0,    0,    0,    0, 65280,  101,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($9, $0) -> $6
+  DEBUG   machine:simulation    tick:264 mpc: 17 regs:   0,  116,    0,    0,    0,    0,    1,  101,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($7, $0) -> $-1
+  DEBUG   machine:simulation    tick:265 mpc: 18 regs:   0,  101,    0,    0,    0,    0,    1,  101,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jump 71
+  DEBUG   machine:simulation    tick:266 mpc: 71 regs:   0,  101,    0,    0,    0,    0,    1,  101,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:inc($8, $0) -> $8
+  DEBUG   machine:simulation    tick:267 mpc: 72 regs:   0,  101,    0,    0,    0,    0,    1,  101,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:268 mpc:  0 regs:   0,  101,    0,    0,    0,    0,    1,  101,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:269 mpc:  1 regs:   0,  101,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:270 mpc:  2 regs:   0,  101,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick:271 mpc:  3 regs:   0,  101,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) BEQ -> 27
+  DEBUG   machine:simulation    tick:272 mpc: 27 regs:   0,  101,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:273 mpc: 28 regs:   0,  101,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $9
+  DEBUG   machine:simulation    tick:274 mpc: 29 regs:   0,  101,    0,    0,    0,    0,    1, BEQ ,    1,  101,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:275 mpc: 30 regs:   0,  101,    0,    0,    0,    0,    0, BEQ ,    1,  101,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:276 mpc: 31 regs:   0,  101,    0,    0,    0,    0,    0, BEQ ,    1,  101,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:277 mpc: 32 regs:   0,  101,    0,    0,    0,    0,    0, BEQ ,    1,  101,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:sub(9, 10) Z -> 34
+  DEBUG   machine:simulation    tick:278 mpc: 33 regs:   0,  101,    0,    0,    0,    0,    0, BEQ ,    1,  101,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jump 71
+  DEBUG   machine:simulation    tick:279 mpc: 71 regs:   0,  101,    0,    0,    0,    0,    0, BEQ ,    1,  101,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:inc($8, $0) -> $8
+  DEBUG   machine:simulation    tick:280 mpc: 72 regs:   0,  101,    0,    0,    0,    0,    0, BEQ ,    2,  101,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:281 mpc:  0 regs:   0,  101,    0,    0,    0,    0,    0, BEQ ,    2,  101,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:282 mpc:  1 regs:   0,  101,    0,    0,    0,    0,    2, SW  ,    2,  101,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:283 mpc:  2 regs:   0,  101,    0,    0,    0,    0,    2, SW  ,    2,  101,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick:284 mpc: 19 regs:   0,  101,    0,    0,    0,    0,    2, SW  ,    2,  101,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:285 mpc: 20 regs:   0,  101,    0,    0,    0,    0,    1, SW  ,    2,  101,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $9
+  DEBUG   machine:simulation    tick:286 mpc: 21 regs:   0,  101,    0,    0,    0,    0,    1, SW  ,    2,  101,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:287 mpc: 22 regs:   0,  101,    0,    0,    0,    0,    0, SW  ,    2,  101,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:288 mpc: 23 regs:   0,  101,    0,    0,    0,    0,    0, SW  ,    2,  101,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:289 mpc: 24 regs:   0,  101,    0,    0,    0,    0,    0, SW  ,    2,  101,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:add($10, $11) -> $6
+  DEBUG   machine:simulation    tick:290 mpc: 25 regs:   0,  101,    0,    0,    0,    0, 65281, SW  ,    2,  101,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($9, $0) -> $7 WR
+  DEBUG   machine:signal_mem_wr output: e
+  DEBUG   machine:simulation    tick:291 mpc: 26 regs:   0,  101,    0,    0,    0,    0, 65281,  101,    2,  101,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jump 71
+  DEBUG   machine:simulation    tick:292 mpc: 71 regs:   0,  101,    0,    0,    0,    0, 65281,  101,    2,  101,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:inc($8, $0) -> $8
+  DEBUG   machine:simulation    tick:293 mpc: 72 regs:   0,  101,    0,    0,    0,    0, 65281,  101,    3,  101,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:294 mpc:  0 regs:   0,  101,    0,    0,    0,    0, 65281,  101,    3,  101,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:295 mpc:  1 regs:   0,  101,    0,    0,    0,    0,    3, BEQ ,    3,  101,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:296 mpc:  2 regs:   0,  101,    0,    0,    0,    0,    3, BEQ ,    3,  101,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick:297 mpc:  3 regs:   0,  101,    0,    0,    0,    0,    3, BEQ ,    3,  101,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) BEQ -> 27
+  DEBUG   machine:simulation    tick:298 mpc: 27 regs:   0,  101,    0,    0,    0,    0,    3, BEQ ,    3,  101,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:299 mpc: 28 regs:   0,  101,    0,    0,    0,    0,    0, BEQ ,    3,  101,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $9
+  DEBUG   machine:simulation    tick:300 mpc: 29 regs:   0,  101,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:301 mpc: 30 regs:   0,  101,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:302 mpc: 31 regs:   0,  101,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:303 mpc: 32 regs:   0,  101,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:sub(9, 10) Z -> 34
+  DEBUG   machine:simulation    tick:304 mpc: 34 regs:   0,  101,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($11, $0) -> $8
+  DEBUG   machine:simulation    tick:305 mpc: 35 regs:   0,  101,    0,    0,    0,    0,    0, BEQ ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:306 mpc:  0 regs:   0,  101,    0,    0,    0,    0,    0, BEQ ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:307 mpc:  1 regs:   0,  101,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:308 mpc: 10 regs:   0,  101,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:309 mpc: 11 regs:   0,  101,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:310 mpc: 12 regs:   0,  101,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:311 mpc: 13 regs:   0,  101,    0,    0,    0,    0,    0, LW  ,    0,    0,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $9
+  DEBUG   machine:simulation    tick:312 mpc: 14 regs:   0,  101,    0,    0,    0,    0,    0, LW  ,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:add($10, $11) -> $6
+  DEBUG   machine:simulation    tick:313 mpc: 15 regs:   0,  101,    0,    0,    0,    0, 65280, LW  ,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($0, $0) -> $0 RD
+  DEBUG   machine:signal_mem_rd input: s
+  DEBUG   machine:simulation    tick:314 mpc: 16 regs:   0,  101,    0,    0,    0,    0, 65280,  115,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($9, $0) -> $6
+  DEBUG   machine:simulation    tick:315 mpc: 17 regs:   0,  101,    0,    0,    0,    0,    1,  115,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($7, $0) -> $-1
+  DEBUG   machine:simulation    tick:316 mpc: 18 regs:   0,  115,    0,    0,    0,    0,    1,  115,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jump 71
+  DEBUG   machine:simulation    tick:317 mpc: 71 regs:   0,  115,    0,    0,    0,    0,    1,  115,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:inc($8, $0) -> $8
+  DEBUG   machine:simulation    tick:318 mpc: 72 regs:   0,  115,    0,    0,    0,    0,    1,  115,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:319 mpc:  0 regs:   0,  115,    0,    0,    0,    0,    1,  115,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:320 mpc:  1 regs:   0,  115,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:321 mpc:  2 regs:   0,  115,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick:322 mpc:  3 regs:   0,  115,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) BEQ -> 27
+  DEBUG   machine:simulation    tick:323 mpc: 27 regs:   0,  115,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:324 mpc: 28 regs:   0,  115,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $9
+  DEBUG   machine:simulation    tick:325 mpc: 29 regs:   0,  115,    0,    0,    0,    0,    1, BEQ ,    1,  115,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:326 mpc: 30 regs:   0,  115,    0,    0,    0,    0,    0, BEQ ,    1,  115,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:327 mpc: 31 regs:   0,  115,    0,    0,    0,    0,    0, BEQ ,    1,  115,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:328 mpc: 32 regs:   0,  115,    0,    0,    0,    0,    0, BEQ ,    1,  115,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:sub(9, 10) Z -> 34
+  DEBUG   machine:simulation    tick:329 mpc: 33 regs:   0,  115,    0,    0,    0,    0,    0, BEQ ,    1,  115,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jump 71
+  DEBUG   machine:simulation    tick:330 mpc: 71 regs:   0,  115,    0,    0,    0,    0,    0, BEQ ,    1,  115,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:inc($8, $0) -> $8
+  DEBUG   machine:simulation    tick:331 mpc: 72 regs:   0,  115,    0,    0,    0,    0,    0, BEQ ,    2,  115,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:332 mpc:  0 regs:   0,  115,    0,    0,    0,    0,    0, BEQ ,    2,  115,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:333 mpc:  1 regs:   0,  115,    0,    0,    0,    0,    2, SW  ,    2,  115,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:334 mpc:  2 regs:   0,  115,    0,    0,    0,    0,    2, SW  ,    2,  115,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick:335 mpc: 19 regs:   0,  115,    0,    0,    0,    0,    2, SW  ,    2,  115,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:336 mpc: 20 regs:   0,  115,    0,    0,    0,    0,    1, SW  ,    2,  115,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $9
+  DEBUG   machine:simulation    tick:337 mpc: 21 regs:   0,  115,    0,    0,    0,    0,    1, SW  ,    2,  115,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:338 mpc: 22 regs:   0,  115,    0,    0,    0,    0,    0, SW  ,    2,  115,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:339 mpc: 23 regs:   0,  115,    0,    0,    0,    0,    0, SW  ,    2,  115,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:340 mpc: 24 regs:   0,  115,    0,    0,    0,    0,    0, SW  ,    2,  115,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:add($10, $11) -> $6
+  DEBUG   machine:simulation    tick:341 mpc: 25 regs:   0,  115,    0,    0,    0,    0, 65281, SW  ,    2,  115,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($9, $0) -> $7 WR
+  DEBUG   machine:signal_mem_wr output: s
+  DEBUG   machine:simulation    tick:342 mpc: 26 regs:   0,  115,    0,    0,    0,    0, 65281,  115,    2,  115,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jump 71
+  DEBUG   machine:simulation    tick:343 mpc: 71 regs:   0,  115,    0,    0,    0,    0, 65281,  115,    2,  115,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:inc($8, $0) -> $8
+  DEBUG   machine:simulation    tick:344 mpc: 72 regs:   0,  115,    0,    0,    0,    0, 65281,  115,    3,  115,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:345 mpc:  0 regs:   0,  115,    0,    0,    0,    0, 65281,  115,    3,  115,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:346 mpc:  1 regs:   0,  115,    0,    0,    0,    0,    3, BEQ ,    3,  115,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:347 mpc:  2 regs:   0,  115,    0,    0,    0,    0,    3, BEQ ,    3,  115,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick:348 mpc:  3 regs:   0,  115,    0,    0,    0,    0,    3, BEQ ,    3,  115,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) BEQ -> 27
+  DEBUG   machine:simulation    tick:349 mpc: 27 regs:   0,  115,    0,    0,    0,    0,    3, BEQ ,    3,  115,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:350 mpc: 28 regs:   0,  115,    0,    0,    0,    0,    0, BEQ ,    3,  115,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $9
+  DEBUG   machine:simulation    tick:351 mpc: 29 regs:   0,  115,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:352 mpc: 30 regs:   0,  115,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:353 mpc: 31 regs:   0,  115,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:354 mpc: 32 regs:   0,  115,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:sub(9, 10) Z -> 34
+  DEBUG   machine:simulation    tick:355 mpc: 34 regs:   0,  115,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($11, $0) -> $8
+  DEBUG   machine:simulation    tick:356 mpc: 35 regs:   0,  115,    0,    0,    0,    0,    0, BEQ ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:357 mpc:  0 regs:   0,  115,    0,    0,    0,    0,    0, BEQ ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:358 mpc:  1 regs:   0,  115,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:359 mpc: 10 regs:   0,  115,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:360 mpc: 11 regs:   0,  115,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:361 mpc: 12 regs:   0,  115,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:362 mpc: 13 regs:   0,  115,    0,    0,    0,    0,    0, LW  ,    0,    0,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $9
+  DEBUG   machine:simulation    tick:363 mpc: 14 regs:   0,  115,    0,    0,    0,    0,    0, LW  ,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:add($10, $11) -> $6
+  DEBUG   machine:simulation    tick:364 mpc: 15 regs:   0,  115,    0,    0,    0,    0, 65280, LW  ,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($0, $0) -> $0 RD
+  DEBUG   machine:signal_mem_rd input: t
+  DEBUG   machine:simulation    tick:365 mpc: 16 regs:   0,  115,    0,    0,    0,    0, 65280,  116,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($9, $0) -> $6
+  DEBUG   machine:simulation    tick:366 mpc: 17 regs:   0,  115,    0,    0,    0,    0,    1,  116,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($7, $0) -> $-1
+  DEBUG   machine:simulation    tick:367 mpc: 18 regs:   0,  116,    0,    0,    0,    0,    1,  116,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jump 71
+  DEBUG   machine:simulation    tick:368 mpc: 71 regs:   0,  116,    0,    0,    0,    0,    1,  116,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:inc($8, $0) -> $8
+  DEBUG   machine:simulation    tick:369 mpc: 72 regs:   0,  116,    0,    0,    0,    0,    1,  116,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:370 mpc:  0 regs:   0,  116,    0,    0,    0,    0,    1,  116,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:371 mpc:  1 regs:   0,  116,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:372 mpc:  2 regs:   0,  116,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick:373 mpc:  3 regs:   0,  116,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) BEQ -> 27
+  DEBUG   machine:simulation    tick:374 mpc: 27 regs:   0,  116,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:375 mpc: 28 regs:   0,  116,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $9
+  DEBUG   machine:simulation    tick:376 mpc: 29 regs:   0,  116,    0,    0,    0,    0,    1, BEQ ,    1,  116,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:377 mpc: 30 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    1,  116,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:378 mpc: 31 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    1,  116,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:379 mpc: 32 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    1,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:sub(9, 10) Z -> 34
+  DEBUG   machine:simulation    tick:380 mpc: 33 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    1,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jump 71
+  DEBUG   machine:simulation    tick:381 mpc: 71 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    1,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:inc($8, $0) -> $8
+  DEBUG   machine:simulation    tick:382 mpc: 72 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    2,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:383 mpc:  0 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    2,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:384 mpc:  1 regs:   0,  116,    0,    0,    0,    0,    2, SW  ,    2,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:385 mpc:  2 regs:   0,  116,    0,    0,    0,    0,    2, SW  ,    2,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick:386 mpc: 19 regs:   0,  116,    0,    0,    0,    0,    2, SW  ,    2,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:387 mpc: 20 regs:   0,  116,    0,    0,    0,    0,    1, SW  ,    2,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $9
+  DEBUG   machine:simulation    tick:388 mpc: 21 regs:   0,  116,    0,    0,    0,    0,    1, SW  ,    2,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:389 mpc: 22 regs:   0,  116,    0,    0,    0,    0,    0, SW  ,    2,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:390 mpc: 23 regs:   0,  116,    0,    0,    0,    0,    0, SW  ,    2,  116,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:391 mpc: 24 regs:   0,  116,    0,    0,    0,    0,    0, SW  ,    2,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:add($10, $11) -> $6
+  DEBUG   machine:simulation    tick:392 mpc: 25 regs:   0,  116,    0,    0,    0,    0, 65281, SW  ,    2,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($9, $0) -> $7 WR
+  DEBUG   machine:signal_mem_wr output: t
+  DEBUG   machine:simulation    tick:393 mpc: 26 regs:   0,  116,    0,    0,    0,    0, 65281,  116,    2,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jump 71
+  DEBUG   machine:simulation    tick:394 mpc: 71 regs:   0,  116,    0,    0,    0,    0, 65281,  116,    2,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:inc($8, $0) -> $8
+  DEBUG   machine:simulation    tick:395 mpc: 72 regs:   0,  116,    0,    0,    0,    0, 65281,  116,    3,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:396 mpc:  0 regs:   0,  116,    0,    0,    0,    0, 65281,  116,    3,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:397 mpc:  1 regs:   0,  116,    0,    0,    0,    0,    3, BEQ ,    3,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:398 mpc:  2 regs:   0,  116,    0,    0,    0,    0,    3, BEQ ,    3,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick:399 mpc:  3 regs:   0,  116,    0,    0,    0,    0,    3, BEQ ,    3,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) BEQ -> 27
+  DEBUG   machine:simulation    tick:400 mpc: 27 regs:   0,  116,    0,    0,    0,    0,    3, BEQ ,    3,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:401 mpc: 28 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    3,  116,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $9
+  DEBUG   machine:simulation    tick:402 mpc: 29 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:403 mpc: 30 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:404 mpc: 31 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:405 mpc: 32 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:sub(9, 10) Z -> 34
+  DEBUG   machine:simulation    tick:406 mpc: 34 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($11, $0) -> $8
+  DEBUG   machine:simulation    tick:407 mpc: 35 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:408 mpc:  0 regs:   0,  116,    0,    0,    0,    0,    0, BEQ ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:409 mpc:  1 regs:   0,  116,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:410 mpc: 10 regs:   0,  116,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:411 mpc: 11 regs:   0,  116,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:412 mpc: 12 regs:   0,  116,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:413 mpc: 13 regs:   0,  116,    0,    0,    0,    0,    0, LW  ,    0,    0,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $9
+  DEBUG   machine:simulation    tick:414 mpc: 14 regs:   0,  116,    0,    0,    0,    0,    0, LW  ,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:add($10, $11) -> $6
+  DEBUG   machine:simulation    tick:415 mpc: 15 regs:   0,  116,    0,    0,    0,    0, 65280, LW  ,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($0, $0) -> $0 RD
+  DEBUG   machine:signal_mem_rd input: !
+  DEBUG   machine:simulation    tick:416 mpc: 16 regs:   0,  116,    0,    0,    0,    0, 65280,   33,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($9, $0) -> $6
+  DEBUG   machine:simulation    tick:417 mpc: 17 regs:   0,  116,    0,    0,    0,    0,    1,   33,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($7, $0) -> $-1
+  DEBUG   machine:simulation    tick:418 mpc: 18 regs:   0,   33,    0,    0,    0,    0,    1,   33,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jump 71
+  DEBUG   machine:simulation    tick:419 mpc: 71 regs:   0,   33,    0,    0,    0,    0,    1,   33,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:inc($8, $0) -> $8
+  DEBUG   machine:simulation    tick:420 mpc: 72 regs:   0,   33,    0,    0,    0,    0,    1,   33,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:421 mpc:  0 regs:   0,   33,    0,    0,    0,    0,    1,   33,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:422 mpc:  1 regs:   0,   33,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:423 mpc:  2 regs:   0,   33,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick:424 mpc:  3 regs:   0,   33,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) BEQ -> 27
+  DEBUG   machine:simulation    tick:425 mpc: 27 regs:   0,   33,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:426 mpc: 28 regs:   0,   33,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $9
+  DEBUG   machine:simulation    tick:427 mpc: 29 regs:   0,   33,    0,    0,    0,    0,    1, BEQ ,    1,   33,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:428 mpc: 30 regs:   0,   33,    0,    0,    0,    0,    0, BEQ ,    1,   33,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:429 mpc: 31 regs:   0,   33,    0,    0,    0,    0,    0, BEQ ,    1,   33,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:430 mpc: 32 regs:   0,   33,    0,    0,    0,    0,    0, BEQ ,    1,   33,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:sub(9, 10) Z -> 34
+  DEBUG   machine:simulation    tick:431 mpc: 33 regs:   0,   33,    0,    0,    0,    0,    0, BEQ ,    1,   33,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jump 71
+  DEBUG   machine:simulation    tick:432 mpc: 71 regs:   0,   33,    0,    0,    0,    0,    0, BEQ ,    1,   33,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:inc($8, $0) -> $8
+  DEBUG   machine:simulation    tick:433 mpc: 72 regs:   0,   33,    0,    0,    0,    0,    0, BEQ ,    2,   33,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:434 mpc:  0 regs:   0,   33,    0,    0,    0,    0,    0, BEQ ,    2,   33,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:435 mpc:  1 regs:   0,   33,    0,    0,    0,    0,    2, SW  ,    2,   33,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:436 mpc:  2 regs:   0,   33,    0,    0,    0,    0,    2, SW  ,    2,   33,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick:437 mpc: 19 regs:   0,   33,    0,    0,    0,    0,    2, SW  ,    2,   33,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:438 mpc: 20 regs:   0,   33,    0,    0,    0,    0,    1, SW  ,    2,   33,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $9
+  DEBUG   machine:simulation    tick:439 mpc: 21 regs:   0,   33,    0,    0,    0,    0,    1, SW  ,    2,   33,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:440 mpc: 22 regs:   0,   33,    0,    0,    0,    0,    0, SW  ,    2,   33,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:441 mpc: 23 regs:   0,   33,    0,    0,    0,    0,    0, SW  ,    2,   33,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:442 mpc: 24 regs:   0,   33,    0,    0,    0,    0,    0, SW  ,    2,   33,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:add($10, $11) -> $6
+  DEBUG   machine:simulation    tick:443 mpc: 25 regs:   0,   33,    0,    0,    0,    0, 65281, SW  ,    2,   33,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($9, $0) -> $7 WR
+  DEBUG   machine:signal_mem_wr output: !
+  DEBUG   machine:simulation    tick:444 mpc: 26 regs:   0,   33,    0,    0,    0,    0, 65281,   33,    2,   33,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jump 71
+  DEBUG   machine:simulation    tick:445 mpc: 71 regs:   0,   33,    0,    0,    0,    0, 65281,   33,    2,   33,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:inc($8, $0) -> $8
+  DEBUG   machine:simulation    tick:446 mpc: 72 regs:   0,   33,    0,    0,    0,    0, 65281,   33,    3,   33,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:447 mpc:  0 regs:   0,   33,    0,    0,    0,    0, 65281,   33,    3,   33,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:448 mpc:  1 regs:   0,   33,    0,    0,    0,    0,    3, BEQ ,    3,   33,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:449 mpc:  2 regs:   0,   33,    0,    0,    0,    0,    3, BEQ ,    3,   33,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick:450 mpc:  3 regs:   0,   33,    0,    0,    0,    0,    3, BEQ ,    3,   33,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) BEQ -> 27
+  DEBUG   machine:simulation    tick:451 mpc: 27 regs:   0,   33,    0,    0,    0,    0,    3, BEQ ,    3,   33,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:452 mpc: 28 regs:   0,   33,    0,    0,    0,    0,    0, BEQ ,    3,   33,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $9
+  DEBUG   machine:simulation    tick:453 mpc: 29 regs:   0,   33,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:454 mpc: 30 regs:   0,   33,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:455 mpc: 31 regs:   0,   33,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0, 65281
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:456 mpc: 32 regs:   0,   33,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:sub(9, 10) Z -> 34
+  DEBUG   machine:simulation    tick:457 mpc: 34 regs:   0,   33,    0,    0,    0,    0,    0, BEQ ,    3,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($11, $0) -> $8
+  DEBUG   machine:simulation    tick:458 mpc: 35 regs:   0,   33,    0,    0,    0,    0,    0, BEQ ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:459 mpc:  0 regs:   0,   33,    0,    0,    0,    0,    0, BEQ ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:460 mpc:  1 regs:   0,   33,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:461 mpc: 10 regs:   0,   33,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:462 mpc: 11 regs:   0,   33,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:463 mpc: 12 regs:   0,   33,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:464 mpc: 13 regs:   0,   33,    0,    0,    0,    0,    0, LW  ,    0,    0,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $9
+  DEBUG   machine:simulation    tick:465 mpc: 14 regs:   0,   33,    0,    0,    0,    0,    0, LW  ,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:add($10, $11) -> $6
+  DEBUG   machine:simulation    tick:466 mpc: 15 regs:   0,   33,    0,    0,    0,    0, 65280, LW  ,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($0, $0) -> $0 RD
+  DEBUG   machine:signal_mem_rd input: \0
+  DEBUG   machine:simulation    tick:467 mpc: 16 regs:   0,   33,    0,    0,    0,    0, 65280,    0,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($9, $0) -> $6
+  DEBUG   machine:simulation    tick:468 mpc: 17 regs:   0,   33,    0,    0,    0,    0,    1,    0,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($7, $0) -> $-1
+  DEBUG   machine:simulation    tick:469 mpc: 18 regs:   0,    0,    0,    0,    0,    0,    1,    0,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jump 71
+  DEBUG   machine:simulation    tick:470 mpc: 71 regs:   0,    0,    0,    0,    0,    0,    1,    0,    0,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:inc($8, $0) -> $8
+  DEBUG   machine:simulation    tick:471 mpc: 72 regs:   0,    0,    0,    0,    0,    0,    1,    0,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:472 mpc:  0 regs:   0,    0,    0,    0,    0,    0,    1,    0,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:473 mpc:  1 regs:   0,    0,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:474 mpc:  2 regs:   0,    0,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick:475 mpc:  3 regs:   0,    0,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) BEQ -> 27
+  DEBUG   machine:simulation    tick:476 mpc: 27 regs:   0,    0,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:477 mpc: 28 regs:   0,    0,    0,    0,    0,    0,    1, BEQ ,    1,    1,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $9
+  DEBUG   machine:simulation    tick:478 mpc: 29 regs:   0,    0,    0,    0,    0,    0,    1, BEQ ,    1,    0,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:simulation    tick:479 mpc: 30 regs:   0,    0,    0,    0,    0,    0,    0, BEQ ,    1,    0,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($-1, $0) -> $10
+  DEBUG   machine:simulation    tick:480 mpc: 31 regs:   0,    0,    0,    0,    0,    0,    0, BEQ ,    1,    0,    0, 65280
+  DEBUG   machine:execute_microinstruction microinstruction: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:simulation    tick:481 mpc: 32 regs:   0,    0,    0,    0,    0,    0,    0, BEQ ,    1,    0,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:sub(9, 10) Z -> 34
+  DEBUG   machine:simulation    tick:482 mpc: 34 regs:   0,    0,    0,    0,    0,    0,    0, BEQ ,    1,    0,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($11, $0) -> $8
+  DEBUG   machine:simulation    tick:483 mpc: 35 regs:   0,    0,    0,    0,    0,    0,    0, BEQ ,    4,    0,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jump 0
+  DEBUG   machine:simulation    tick:484 mpc:  0 regs:   0,    0,    0,    0,    0,    0,    0, BEQ ,    4,    0,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:simulation    tick:485 mpc:  1 regs:   0,    0,    0,    0,    0,    0,    4, HALT,    4,    0,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) LW -> 10
+  DEBUG   machine:simulation    tick:486 mpc:  2 regs:   0,    0,    0,    0,    0,    0,    4, HALT,    4,    0,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SW -> 19
+  DEBUG   machine:simulation    tick:487 mpc:  3 regs:   0,    0,    0,    0,    0,    0,    4, HALT,    4,    0,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) BEQ -> 27
+  DEBUG   machine:simulation    tick:488 mpc:  4 regs:   0,    0,    0,    0,    0,    0,    4, HALT,    4,    0,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) BLEQ -> 36
+  DEBUG   machine:simulation    tick:489 mpc:  5 regs:   0,    0,    0,    0,    0,    0,    4, HALT,    4,    0,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) ADDI -> 45
+  DEBUG   machine:simulation    tick:490 mpc:  6 regs:   0,    0,    0,    0,    0,    0,    4, HALT,    4,    0,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) ANDI -> 51
+  DEBUG   machine:simulation    tick:491 mpc:  7 regs:   0,    0,    0,    0,    0,    0,    4, HALT,    4,    0,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) SHR -> 57
+  DEBUG   machine:simulation    tick:492 mpc:  8 regs:   0,    0,    0,    0,    0,    0,    4, HALT,    4,    0,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) ADD -> 63
+  DEBUG   machine:simulation    tick:493 mpc:  9 regs:   0,    0,    0,    0,    0,    0,    4, HALT,    4,    0,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: jmp:only_x(7, 0) HALT -> 70
+  DEBUG   machine:simulation    tick:494 mpc: 70 regs:   0,    0,    0,    0,    0,    0,    4, HALT,    4,    0,    0,    4
+  DEBUG   machine:execute_microinstruction microinstruction: op:only_x($0, $0) -> $0 STOP
