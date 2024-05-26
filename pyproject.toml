@@ -27,7 +27,6 @@ strict_optional = true
 warn_return_any = true
 warn_unused_configs = true
 
-
 [tool.pytest.ini_options]
 enable_assertion_pass_hook = true
 addopts = "--doctest-modules"
@@ -96,10 +95,10 @@ ignore = [
     # to simplify code for non-Python programmers
     "PTH118", # `os.path.join()` should be replaced by `Path` with `/` operator
     "UP032",  # [*] Use f-string instead of `format` call
-    "PT015",
-    "E741",
-    "UP007",
-    "TRY003",
+    "PT015",  # Prohibit the use of `assert False`
+    "E741",   # Ambiguous variable name (l, I, etc.)
+    "UP007",  # Use X | Y instead of typing.Optional and typing.Union
+    "TRY003", # No messages in exceptions
 ]
 unfixable = [
     "ERA001", # prohibit to "auto-fix" (=remove) commented-out code

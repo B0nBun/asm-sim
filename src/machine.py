@@ -16,6 +16,7 @@ def main(program_file: str, input_file: str) -> None:
     with open(input_file, encoding="ascii") as f:
         text = f.read()
         input_buffer = [ord(c) for c in text]
+        input_buffer.append(0)
 
     output = simulation(program, input_buffer)
     print(output, end="")
@@ -79,7 +80,8 @@ class DataPath:
         assert isinstance(address, int), "Expected data, but got instruction"
         read = self.memory[address]
         if address == isa.INPUT_DEVICE_ADDR:
-            popped = 0 if len(self.input_buffer) == 0 else self.input_buffer.pop(0)
+            assert len(self.input_buffer) > 0, "Read from empty input buffer"
+            popped = self.input_buffer.pop(0)
             read = popped & 0xFF
             logging.debug("input: %s", chr(read) if read != 0 else r"\0")
 

@@ -7,7 +7,7 @@ from typing import Final, NamedTuple, TextIO, TypeAlias, Union
 
 from utils import iota, iota_reset
 
-GEN_REG_N: Final[int] = 6
+GEN_REG_N = 6
 AR = GEN_REG_N
 DR = GEN_REG_N + iota()
 PC = GEN_REG_N + iota()
@@ -18,7 +18,7 @@ REG_N = GEN_REG_N + iota_reset()
 IND_AR = -1
 IND_AR_MASK = pow(2, math.ceil(math.log(REG_N) / math.log(2))) - 1
 
-ORIGIN: Final[int] = 0
+ORIGIN = 0
 MEMORY_SIZE = 0xFFFF
 INPUT_DEVICE_ADDR = 0xFF00
 OUTPUT_DEVICE_ADDR = 0xFF01
