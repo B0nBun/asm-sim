@@ -60,7 +60,18 @@
 
 [source]
 ----
-include::examples/hello.asm[]
+hello: "Hello, World!\0"
+
+start:
+    addi $1, $0, 0
+loop:
+    lw $2, $1, hello
+    beq $2, $0, break
+    sw $2, $0, output
+    addi $1, $1, 1
+    beq $0, $0, loop
+break:
+    halt
 ----
 
 == Система команд
@@ -99,9 +110,9 @@ CLI: `translator.py <source_file> <target_file>`
 
 Исходный код обязательно должен содержать метку `start`, обозначающую с какой инструкции начнется исполнение программы.
 
-Машинный код для link:examples/hello.asm[]:
+Машинный код для link:examples/hello.asm[examples/hello.asm]:
 
-[source,json]
+[source]
 ----
 [
   14, // Метка start
@@ -173,12 +184,14 @@ regs[ar]    |  ‖         ‖            | |  |  |          |      |
 Запись из АЛУ в регистры также реализована ввиду метода `write_register`, который вызывается каждый такт. Аргументами метода являются `*_sel` и `alu_ctrl`
 
 Описание "селекторов":
+
 * `x_sel` - Выбор первого операнда для АЛУ-операций. Может быть одним из регистров, либо `IND_AR` (прочитать данные из регистра, индекс которого хранится в нижних битах  `AR`). По умолчанию `$0`
 * `y_sel` - Выбор второго операнда для АЛУ-операций. Может быть одним из регистров. По умолчанию `$0`
 * `alu-ctrl` - Выбор операции выполняемой АЛУ. По умолчанию `only_x`, то есть просто возврат первого операнда
 * `rwr_sel` - Выбор регистра в который надо записать результат АЛУ.  Может быть одним из регистров, либо `IND_AR` (записать данные в регистр, индекс которого хранится в нижних битах `AR`). По умолчанию `$0`
 
 Флаги:
+
 * `zero` - Если результат АЛУ равен 0
 * `carry` - Если при выполнении операции АЛУ возник перенос
 
@@ -236,7 +249,6 @@ $ python3 src/translator.py examples/cat.asm target.out
 $ cat target.out
 [0, [[1, [1], [0], [65280]], [3, [1], [0], [4]], [2, [1], [0], [65281]], [3, [0], [0], [0]], [9]]]
 $ echo 'cat' | python3 src/machine.py target.out /dev/stdin
-echo 'cat' | python3 src/machine.py target.out /dev/stdin
 DEBUG:root:executing: op:only_x($8, $0) -> $6 RD
 DEBUG:root:control_unit: tick:  0 mpc:  0 regs:   0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0
 DEBUG:root:executing: jmp:only_x(7, 0) LW -> 10
