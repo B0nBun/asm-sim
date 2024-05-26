@@ -42,6 +42,7 @@ class Op(Enum):
     ADDI = iota(), OpType.RRI
     ANDI = iota(), OpType.RRI
     ADD = iota(), OpType.RRR
+    SUB = iota(), OpType.RRR
     SHR = iota(), OpType.RRI
     HALT = iota_reset(), OpType.NOARG
 

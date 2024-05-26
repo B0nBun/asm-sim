@@ -1,0 +1,873 @@
+in_source: |-
+  hex_prefix: "0x"
+  hex: "0123456789ABCDEF"
+  start:
+      addi $1, $0, 10
+      addi $2, $0, 25
+
+  loop:
+      beq $2, $0, print_a
+      bleq $1, $2, branch
+      sub $1, $1, $2
+      beq $0, $0, loop
+  branch:
+      sub $2, $2, $1
+      beq $0, $0, loop
+
+  print_a:
+      lw $2, $0, hex_prefix
+      sw $2, $0, output
+      addi $2, $0, 1
+      lw $2, $2, hex_prefix
+      sw $2, $0, output
+  print_loop:
+      andi $2, $1, 15
+      lw $2, $2, hex
+      sw $2, $0, output
+      shr $1, $1, 4
+      beq $1, $0, break
+      beq $0, $0, print_loop
+  break:
+      halt
+in_stdin: ''
+out_code: |-
+  [18, [48, 120, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 65, 66, 67, 68, 69, 70, [5, [1], [0], [10]], [5, [2], [0], [25]], [3, [2], [0], [26]], [4, [1], [2], [24]], [8, [1], [1], [2]], [3, [0], [0], [20]], [8, [2], [2], [1]], [3, [0], [0], [20]], [1, [2], [0], [0]], [2, [2], [0], [65281]], [5, [2], [0], [1]], [1, [2], [2], [0]], [2, [2], [0], [65281]], [6, [2], [1], [15]], [1, [2], [2], [2]], [2, [2], [0], [65281]], [9, [1], [1], [4]], [3, [1], [0], [37]], [3, [0], [0], [31]], [10]]]
+out_stdout: |-
+  ============================================================
+  0x5
+out_log: |
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick:  0 mpc:  0 regs:   0,    0,    0,    0,    0,    0,    0,    0,   18,    0,    0,    0
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick:  1 mpc:  1 regs:   0,    0,    0,    0,    0,    0,   18, ADDI,   18,    0,    0,    0
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SW -> 20
+  DEBUG   machine:execute_microinstruction control_unit: tick:  2 mpc:  2 regs:   0,    0,    0,    0,    0,    0,   18, ADDI,   18,    0,    0,    0
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BEQ -> 28
+  DEBUG   machine:execute_microinstruction control_unit: tick:  3 mpc:  3 regs:   0,    0,    0,    0,    0,    0,   18, ADDI,   18,    0,    0,    0
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BLEQ -> 37
+  DEBUG   machine:execute_microinstruction control_unit: tick:  4 mpc:  4 regs:   0,    0,    0,    0,    0,    0,   18, ADDI,   18,    0,    0,    0
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) ADDI -> 46
+  DEBUG   machine:execute_microinstruction control_unit: tick:  5 mpc:  5 regs:   0,    0,    0,    0,    0,    0,   18, ADDI,   18,    0,    0,    0
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:  6 mpc: 46 regs:   0,    0,    0,    0,    0,    0,   18, ADDI,   18,    0,    0,    0
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick:  7 mpc: 47 regs:   0,    0,    0,    0,    0,    0,    0, ADDI,   18,    0,    0,    0
+  DEBUG   machine:execute_microinstruction executing: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick:  8 mpc: 48 regs:   0,    0,    0,    0,    0,    0,    0, ADDI,   18,    0,    0,    0
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:  9 mpc: 49 regs:   0,    0,    0,    0,    0,    0,    0, ADDI,   18,    0,    0,   10
+  DEBUG   machine:execute_microinstruction executing: op:add($10, $11) -> $-1
+  DEBUG   machine:execute_microinstruction control_unit: tick: 10 mpc: 50 regs:   0,    0,    0,    0,    0,    0,    1, ADDI,   18,    0,    0,   10
+  DEBUG   machine:execute_microinstruction executing: jump 79
+  DEBUG   machine:execute_microinstruction control_unit: tick: 11 mpc: 51 regs:   0,   10,    0,    0,    0,    0,    1, ADDI,   18,    0,    0,   10
+  DEBUG   machine:execute_microinstruction executing: op:inc($8, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick: 12 mpc: 79 regs:   0,   10,    0,    0,    0,    0,    1, ADDI,   18,    0,    0,   10
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick: 13 mpc: 80 regs:   0,   10,    0,    0,    0,    0,    1, ADDI,   19,    0,    0,   10
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick: 14 mpc:  0 regs:   0,   10,    0,    0,    0,    0,    1, ADDI,   19,    0,    0,   10
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick: 15 mpc:  1 regs:   0,   10,    0,    0,    0,    0,   19, ADDI,   19,    0,    0,   10
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SW -> 20
+  DEBUG   machine:execute_microinstruction control_unit: tick: 16 mpc:  2 regs:   0,   10,    0,    0,    0,    0,   19, ADDI,   19,    0,    0,   10
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BEQ -> 28
+  DEBUG   machine:execute_microinstruction control_unit: tick: 17 mpc:  3 regs:   0,   10,    0,    0,    0,    0,   19, ADDI,   19,    0,    0,   10
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BLEQ -> 37
+  DEBUG   machine:execute_microinstruction control_unit: tick: 18 mpc:  4 regs:   0,   10,    0,    0,    0,    0,   19, ADDI,   19,    0,    0,   10
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) ADDI -> 46
+  DEBUG   machine:execute_microinstruction control_unit: tick: 19 mpc:  5 regs:   0,   10,    0,    0,    0,    0,   19, ADDI,   19,    0,    0,   10
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick: 20 mpc: 46 regs:   0,   10,    0,    0,    0,    0,   19, ADDI,   19,    0,    0,   10
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick: 21 mpc: 47 regs:   0,   10,    0,    0,    0,    0,    0, ADDI,   19,    0,    0,   10
+  DEBUG   machine:execute_microinstruction executing: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick: 22 mpc: 48 regs:   0,   10,    0,    0,    0,    0,    0, ADDI,   19,    0,    0,   10
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick: 23 mpc: 49 regs:   0,   10,    0,    0,    0,    0,    0, ADDI,   19,    0,    0,   25
+  DEBUG   machine:execute_microinstruction executing: op:add($10, $11) -> $-1
+  DEBUG   machine:execute_microinstruction control_unit: tick: 24 mpc: 50 regs:   0,   10,    0,    0,    0,    0,    2, ADDI,   19,    0,    0,   25
+  DEBUG   machine:execute_microinstruction executing: jump 79
+  DEBUG   machine:execute_microinstruction control_unit: tick: 25 mpc: 51 regs:   0,   10,   25,    0,    0,    0,    2, ADDI,   19,    0,    0,   25
+  DEBUG   machine:execute_microinstruction executing: op:inc($8, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick: 26 mpc: 79 regs:   0,   10,   25,    0,    0,    0,    2, ADDI,   19,    0,    0,   25
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick: 27 mpc: 80 regs:   0,   10,   25,    0,    0,    0,    2, ADDI,   20,    0,    0,   25
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick: 28 mpc:  0 regs:   0,   10,   25,    0,    0,    0,    2, ADDI,   20,    0,    0,   25
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick: 29 mpc:  1 regs:   0,   10,   25,    0,    0,    0,   20, BEQ ,   20,    0,    0,   25
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SW -> 20
+  DEBUG   machine:execute_microinstruction control_unit: tick: 30 mpc:  2 regs:   0,   10,   25,    0,    0,    0,   20, BEQ ,   20,    0,    0,   25
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BEQ -> 28
+  DEBUG   machine:execute_microinstruction control_unit: tick: 31 mpc:  3 regs:   0,   10,   25,    0,    0,    0,   20, BEQ ,   20,    0,    0,   25
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick: 32 mpc: 28 regs:   0,   10,   25,    0,    0,    0,   20, BEQ ,   20,    0,    0,   25
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $9
+  DEBUG   machine:execute_microinstruction control_unit: tick: 33 mpc: 29 regs:   0,   10,   25,    0,    0,    0,    2, BEQ ,   20,    0,    0,   25
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick: 34 mpc: 30 regs:   0,   10,   25,    0,    0,    0,    2, BEQ ,   20,   25,    0,   25
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick: 35 mpc: 31 regs:   0,   10,   25,    0,    0,    0,    0, BEQ ,   20,   25,    0,   25
+  DEBUG   machine:execute_microinstruction executing: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick: 36 mpc: 32 regs:   0,   10,   25,    0,    0,    0,    0, BEQ ,   20,   25,    0,   25
+  DEBUG   machine:execute_microinstruction executing: jmp:sub(9, 10) Z -> 35
+  DEBUG   machine:execute_microinstruction control_unit: tick: 37 mpc: 33 regs:   0,   10,   25,    0,    0,    0,    0, BEQ ,   20,   25,    0,   26
+  DEBUG   machine:execute_microinstruction executing: jump 79
+  DEBUG   machine:execute_microinstruction control_unit: tick: 38 mpc: 34 regs:   0,   10,   25,    0,    0,    0,    0, BEQ ,   20,   25,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:inc($8, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick: 39 mpc: 79 regs:   0,   10,   25,    0,    0,    0,    0, BEQ ,   20,   25,    0,   26
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick: 40 mpc: 80 regs:   0,   10,   25,    0,    0,    0,    0, BEQ ,   21,   25,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick: 41 mpc:  0 regs:   0,   10,   25,    0,    0,    0,    0, BEQ ,   21,   25,    0,   26
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick: 42 mpc:  1 regs:   0,   10,   25,    0,    0,    0,   21, BLEQ,   21,   25,    0,   26
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SW -> 20
+  DEBUG   machine:execute_microinstruction control_unit: tick: 43 mpc:  2 regs:   0,   10,   25,    0,    0,    0,   21, BLEQ,   21,   25,    0,   26
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BEQ -> 28
+  DEBUG   machine:execute_microinstruction control_unit: tick: 44 mpc:  3 regs:   0,   10,   25,    0,    0,    0,   21, BLEQ,   21,   25,    0,   26
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BLEQ -> 37
+  DEBUG   machine:execute_microinstruction control_unit: tick: 45 mpc:  4 regs:   0,   10,   25,    0,    0,    0,   21, BLEQ,   21,   25,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick: 46 mpc: 37 regs:   0,   10,   25,    0,    0,    0,   21, BLEQ,   21,   25,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $9
+  DEBUG   machine:execute_microinstruction control_unit: tick: 47 mpc: 38 regs:   0,   10,   25,    0,    0,    0,    1, BLEQ,   21,   25,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick: 48 mpc: 39 regs:   0,   10,   25,    0,    0,    0,    1, BLEQ,   21,   10,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick: 49 mpc: 40 regs:   0,   10,   25,    0,    0,    0,    2, BLEQ,   21,   10,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick: 50 mpc: 41 regs:   0,   10,   25,    0,    0,    0,    2, BLEQ,   21,   10,   25,   26
+  DEBUG   machine:execute_microinstruction executing: jmp:sub(9, 10) Z -> 44 C -> 44
+  DEBUG   machine:execute_microinstruction control_unit: tick: 51 mpc: 42 regs:   0,   10,   25,    0,    0,    0,    2, BLEQ,   21,   10,   25,   24
+  DEBUG   machine:execute_microinstruction executing: op:only_x($11, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick: 52 mpc: 44 regs:   0,   10,   25,    0,    0,    0,    2, BLEQ,   21,   10,   25,   24
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick: 53 mpc: 45 regs:   0,   10,   25,    0,    0,    0,    2, BLEQ,   24,   10,   25,   24
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick: 54 mpc:  0 regs:   0,   10,   25,    0,    0,    0,    2, BLEQ,   24,   10,   25,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick: 55 mpc:  1 regs:   0,   10,   25,    0,    0,    0,   24, SUB ,   24,   10,   25,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SW -> 20
+  DEBUG   machine:execute_microinstruction control_unit: tick: 56 mpc:  2 regs:   0,   10,   25,    0,    0,    0,   24, SUB ,   24,   10,   25,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BEQ -> 28
+  DEBUG   machine:execute_microinstruction control_unit: tick: 57 mpc:  3 regs:   0,   10,   25,    0,    0,    0,   24, SUB ,   24,   10,   25,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BLEQ -> 37
+  DEBUG   machine:execute_microinstruction control_unit: tick: 58 mpc:  4 regs:   0,   10,   25,    0,    0,    0,   24, SUB ,   24,   10,   25,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) ADDI -> 46
+  DEBUG   machine:execute_microinstruction control_unit: tick: 59 mpc:  5 regs:   0,   10,   25,    0,    0,    0,   24, SUB ,   24,   10,   25,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) ANDI -> 52
+  DEBUG   machine:execute_microinstruction control_unit: tick: 60 mpc:  6 regs:   0,   10,   25,    0,    0,    0,   24, SUB ,   24,   10,   25,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SHR -> 58
+  DEBUG   machine:execute_microinstruction control_unit: tick: 61 mpc:  7 regs:   0,   10,   25,    0,    0,    0,   24, SUB ,   24,   10,   25,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) ADD -> 64
+  DEBUG   machine:execute_microinstruction control_unit: tick: 62 mpc:  8 regs:   0,   10,   25,    0,    0,    0,   24, SUB ,   24,   10,   25,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SUB -> 71
+  DEBUG   machine:execute_microinstruction control_unit: tick: 63 mpc:  9 regs:   0,   10,   25,    0,    0,    0,   24, SUB ,   24,   10,   25,   24
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick: 64 mpc: 71 regs:   0,   10,   25,    0,    0,    0,   24, SUB ,   24,   10,   25,   24
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick: 65 mpc: 72 regs:   0,   10,   25,    0,    0,    0,    2, SUB ,   24,   10,   25,   24
+  DEBUG   machine:execute_microinstruction executing: op:mask_thrd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick: 66 mpc: 73 regs:   0,   10,   25,    0,    0,    0,    2, SUB ,   24,   10,   25,   24
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick: 67 mpc: 74 regs:   0,   10,   25,    0,    0,    0,    1, SUB ,   24,   10,   25,   24
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick: 68 mpc: 75 regs:   0,   10,   25,    0,    0,    0,    1, SUB ,   24,   10,   25,   10
+  DEBUG   machine:execute_microinstruction executing: op:sub($10, $11) -> $-1
+  DEBUG   machine:execute_microinstruction control_unit: tick: 69 mpc: 76 regs:   0,   10,   25,    0,    0,    0,    2, SUB ,   24,   10,   25,   10
+  DEBUG   machine:execute_microinstruction executing: jump 79
+  DEBUG   machine:execute_microinstruction control_unit: tick: 70 mpc: 77 regs:   0,   10,   15,    0,    0,    0,    2, SUB ,   24,   10,   25,   10
+  DEBUG   machine:execute_microinstruction executing: op:inc($8, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick: 71 mpc: 79 regs:   0,   10,   15,    0,    0,    0,    2, SUB ,   24,   10,   25,   10
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick: 72 mpc: 80 regs:   0,   10,   15,    0,    0,    0,    2, SUB ,   25,   10,   25,   10
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick: 73 mpc:  0 regs:   0,   10,   15,    0,    0,    0,    2, SUB ,   25,   10,   25,   10
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick: 74 mpc:  1 regs:   0,   10,   15,    0,    0,    0,   25, BEQ ,   25,   10,   25,   10
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SW -> 20
+  DEBUG   machine:execute_microinstruction control_unit: tick: 75 mpc:  2 regs:   0,   10,   15,    0,    0,    0,   25, BEQ ,   25,   10,   25,   10
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BEQ -> 28
+  DEBUG   machine:execute_microinstruction control_unit: tick: 76 mpc:  3 regs:   0,   10,   15,    0,    0,    0,   25, BEQ ,   25,   10,   25,   10
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick: 77 mpc: 28 regs:   0,   10,   15,    0,    0,    0,   25, BEQ ,   25,   10,   25,   10
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $9
+  DEBUG   machine:execute_microinstruction control_unit: tick: 78 mpc: 29 regs:   0,   10,   15,    0,    0,    0,    0, BEQ ,   25,   10,   25,   10
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick: 79 mpc: 30 regs:   0,   10,   15,    0,    0,    0,    0, BEQ ,   25,    0,   25,   10
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick: 80 mpc: 31 regs:   0,   10,   15,    0,    0,    0,    0, BEQ ,   25,    0,   25,   10
+  DEBUG   machine:execute_microinstruction executing: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick: 81 mpc: 32 regs:   0,   10,   15,    0,    0,    0,    0, BEQ ,   25,    0,    0,   10
+  DEBUG   machine:execute_microinstruction executing: jmp:sub(9, 10) Z -> 35
+  DEBUG   machine:execute_microinstruction control_unit: tick: 82 mpc: 33 regs:   0,   10,   15,    0,    0,    0,    0, BEQ ,   25,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: op:only_x($11, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick: 83 mpc: 35 regs:   0,   10,   15,    0,    0,    0,    0, BEQ ,   25,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick: 84 mpc: 36 regs:   0,   10,   15,    0,    0,    0,    0, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick: 85 mpc:  0 regs:   0,   10,   15,    0,    0,    0,    0, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick: 86 mpc:  1 regs:   0,   10,   15,    0,    0,    0,   20, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SW -> 20
+  DEBUG   machine:execute_microinstruction control_unit: tick: 87 mpc:  2 regs:   0,   10,   15,    0,    0,    0,   20, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BEQ -> 28
+  DEBUG   machine:execute_microinstruction control_unit: tick: 88 mpc:  3 regs:   0,   10,   15,    0,    0,    0,   20, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick: 89 mpc: 28 regs:   0,   10,   15,    0,    0,    0,   20, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $9
+  DEBUG   machine:execute_microinstruction control_unit: tick: 90 mpc: 29 regs:   0,   10,   15,    0,    0,    0,    2, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick: 91 mpc: 30 regs:   0,   10,   15,    0,    0,    0,    2, BEQ ,   20,   15,    0,   20
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick: 92 mpc: 31 regs:   0,   10,   15,    0,    0,    0,    0, BEQ ,   20,   15,    0,   20
+  DEBUG   machine:execute_microinstruction executing: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick: 93 mpc: 32 regs:   0,   10,   15,    0,    0,    0,    0, BEQ ,   20,   15,    0,   20
+  DEBUG   machine:execute_microinstruction executing: jmp:sub(9, 10) Z -> 35
+  DEBUG   machine:execute_microinstruction control_unit: tick: 94 mpc: 33 regs:   0,   10,   15,    0,    0,    0,    0, BEQ ,   20,   15,    0,   26
+  DEBUG   machine:execute_microinstruction executing: jump 79
+  DEBUG   machine:execute_microinstruction control_unit: tick: 95 mpc: 34 regs:   0,   10,   15,    0,    0,    0,    0, BEQ ,   20,   15,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:inc($8, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick: 96 mpc: 79 regs:   0,   10,   15,    0,    0,    0,    0, BEQ ,   20,   15,    0,   26
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick: 97 mpc: 80 regs:   0,   10,   15,    0,    0,    0,    0, BEQ ,   21,   15,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick: 98 mpc:  0 regs:   0,   10,   15,    0,    0,    0,    0, BEQ ,   21,   15,    0,   26
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick: 99 mpc:  1 regs:   0,   10,   15,    0,    0,    0,   21, BLEQ,   21,   15,    0,   26
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SW -> 20
+  DEBUG   machine:execute_microinstruction control_unit: tick:100 mpc:  2 regs:   0,   10,   15,    0,    0,    0,   21, BLEQ,   21,   15,    0,   26
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BEQ -> 28
+  DEBUG   machine:execute_microinstruction control_unit: tick:101 mpc:  3 regs:   0,   10,   15,    0,    0,    0,   21, BLEQ,   21,   15,    0,   26
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BLEQ -> 37
+  DEBUG   machine:execute_microinstruction control_unit: tick:102 mpc:  4 regs:   0,   10,   15,    0,    0,    0,   21, BLEQ,   21,   15,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:103 mpc: 37 regs:   0,   10,   15,    0,    0,    0,   21, BLEQ,   21,   15,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $9
+  DEBUG   machine:execute_microinstruction control_unit: tick:104 mpc: 38 regs:   0,   10,   15,    0,    0,    0,    1, BLEQ,   21,   15,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:105 mpc: 39 regs:   0,   10,   15,    0,    0,    0,    1, BLEQ,   21,   10,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick:106 mpc: 40 regs:   0,   10,   15,    0,    0,    0,    2, BLEQ,   21,   10,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick:107 mpc: 41 regs:   0,   10,   15,    0,    0,    0,    2, BLEQ,   21,   10,   15,   26
+  DEBUG   machine:execute_microinstruction executing: jmp:sub(9, 10) Z -> 44 C -> 44
+  DEBUG   machine:execute_microinstruction control_unit: tick:108 mpc: 42 regs:   0,   10,   15,    0,    0,    0,    2, BLEQ,   21,   10,   15,   24
+  DEBUG   machine:execute_microinstruction executing: op:only_x($11, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick:109 mpc: 44 regs:   0,   10,   15,    0,    0,    0,    2, BLEQ,   21,   10,   15,   24
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick:110 mpc: 45 regs:   0,   10,   15,    0,    0,    0,    2, BLEQ,   24,   10,   15,   24
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick:111 mpc:  0 regs:   0,   10,   15,    0,    0,    0,    2, BLEQ,   24,   10,   15,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick:112 mpc:  1 regs:   0,   10,   15,    0,    0,    0,   24, SUB ,   24,   10,   15,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SW -> 20
+  DEBUG   machine:execute_microinstruction control_unit: tick:113 mpc:  2 regs:   0,   10,   15,    0,    0,    0,   24, SUB ,   24,   10,   15,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BEQ -> 28
+  DEBUG   machine:execute_microinstruction control_unit: tick:114 mpc:  3 regs:   0,   10,   15,    0,    0,    0,   24, SUB ,   24,   10,   15,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BLEQ -> 37
+  DEBUG   machine:execute_microinstruction control_unit: tick:115 mpc:  4 regs:   0,   10,   15,    0,    0,    0,   24, SUB ,   24,   10,   15,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) ADDI -> 46
+  DEBUG   machine:execute_microinstruction control_unit: tick:116 mpc:  5 regs:   0,   10,   15,    0,    0,    0,   24, SUB ,   24,   10,   15,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) ANDI -> 52
+  DEBUG   machine:execute_microinstruction control_unit: tick:117 mpc:  6 regs:   0,   10,   15,    0,    0,    0,   24, SUB ,   24,   10,   15,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SHR -> 58
+  DEBUG   machine:execute_microinstruction control_unit: tick:118 mpc:  7 regs:   0,   10,   15,    0,    0,    0,   24, SUB ,   24,   10,   15,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) ADD -> 64
+  DEBUG   machine:execute_microinstruction control_unit: tick:119 mpc:  8 regs:   0,   10,   15,    0,    0,    0,   24, SUB ,   24,   10,   15,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SUB -> 71
+  DEBUG   machine:execute_microinstruction control_unit: tick:120 mpc:  9 regs:   0,   10,   15,    0,    0,    0,   24, SUB ,   24,   10,   15,   24
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:121 mpc: 71 regs:   0,   10,   15,    0,    0,    0,   24, SUB ,   24,   10,   15,   24
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick:122 mpc: 72 regs:   0,   10,   15,    0,    0,    0,    2, SUB ,   24,   10,   15,   24
+  DEBUG   machine:execute_microinstruction executing: op:mask_thrd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:123 mpc: 73 regs:   0,   10,   15,    0,    0,    0,    2, SUB ,   24,   10,   15,   24
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick:124 mpc: 74 regs:   0,   10,   15,    0,    0,    0,    1, SUB ,   24,   10,   15,   24
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:125 mpc: 75 regs:   0,   10,   15,    0,    0,    0,    1, SUB ,   24,   10,   15,   10
+  DEBUG   machine:execute_microinstruction executing: op:sub($10, $11) -> $-1
+  DEBUG   machine:execute_microinstruction control_unit: tick:126 mpc: 76 regs:   0,   10,   15,    0,    0,    0,    2, SUB ,   24,   10,   15,   10
+  DEBUG   machine:execute_microinstruction executing: jump 79
+  DEBUG   machine:execute_microinstruction control_unit: tick:127 mpc: 77 regs:   0,   10,    5,    0,    0,    0,    2, SUB ,   24,   10,   15,   10
+  DEBUG   machine:execute_microinstruction executing: op:inc($8, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick:128 mpc: 79 regs:   0,   10,    5,    0,    0,    0,    2, SUB ,   24,   10,   15,   10
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick:129 mpc: 80 regs:   0,   10,    5,    0,    0,    0,    2, SUB ,   25,   10,   15,   10
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick:130 mpc:  0 regs:   0,   10,    5,    0,    0,    0,    2, SUB ,   25,   10,   15,   10
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick:131 mpc:  1 regs:   0,   10,    5,    0,    0,    0,   25, BEQ ,   25,   10,   15,   10
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SW -> 20
+  DEBUG   machine:execute_microinstruction control_unit: tick:132 mpc:  2 regs:   0,   10,    5,    0,    0,    0,   25, BEQ ,   25,   10,   15,   10
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BEQ -> 28
+  DEBUG   machine:execute_microinstruction control_unit: tick:133 mpc:  3 regs:   0,   10,    5,    0,    0,    0,   25, BEQ ,   25,   10,   15,   10
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:134 mpc: 28 regs:   0,   10,    5,    0,    0,    0,   25, BEQ ,   25,   10,   15,   10
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $9
+  DEBUG   machine:execute_microinstruction control_unit: tick:135 mpc: 29 regs:   0,   10,    5,    0,    0,    0,    0, BEQ ,   25,   10,   15,   10
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:136 mpc: 30 regs:   0,   10,    5,    0,    0,    0,    0, BEQ ,   25,    0,   15,   10
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick:137 mpc: 31 regs:   0,   10,    5,    0,    0,    0,    0, BEQ ,   25,    0,   15,   10
+  DEBUG   machine:execute_microinstruction executing: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick:138 mpc: 32 regs:   0,   10,    5,    0,    0,    0,    0, BEQ ,   25,    0,    0,   10
+  DEBUG   machine:execute_microinstruction executing: jmp:sub(9, 10) Z -> 35
+  DEBUG   machine:execute_microinstruction control_unit: tick:139 mpc: 33 regs:   0,   10,    5,    0,    0,    0,    0, BEQ ,   25,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: op:only_x($11, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick:140 mpc: 35 regs:   0,   10,    5,    0,    0,    0,    0, BEQ ,   25,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick:141 mpc: 36 regs:   0,   10,    5,    0,    0,    0,    0, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick:142 mpc:  0 regs:   0,   10,    5,    0,    0,    0,    0, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick:143 mpc:  1 regs:   0,   10,    5,    0,    0,    0,   20, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SW -> 20
+  DEBUG   machine:execute_microinstruction control_unit: tick:144 mpc:  2 regs:   0,   10,    5,    0,    0,    0,   20, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BEQ -> 28
+  DEBUG   machine:execute_microinstruction control_unit: tick:145 mpc:  3 regs:   0,   10,    5,    0,    0,    0,   20, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:146 mpc: 28 regs:   0,   10,    5,    0,    0,    0,   20, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $9
+  DEBUG   machine:execute_microinstruction control_unit: tick:147 mpc: 29 regs:   0,   10,    5,    0,    0,    0,    2, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:148 mpc: 30 regs:   0,   10,    5,    0,    0,    0,    2, BEQ ,   20,    5,    0,   20
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick:149 mpc: 31 regs:   0,   10,    5,    0,    0,    0,    0, BEQ ,   20,    5,    0,   20
+  DEBUG   machine:execute_microinstruction executing: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick:150 mpc: 32 regs:   0,   10,    5,    0,    0,    0,    0, BEQ ,   20,    5,    0,   20
+  DEBUG   machine:execute_microinstruction executing: jmp:sub(9, 10) Z -> 35
+  DEBUG   machine:execute_microinstruction control_unit: tick:151 mpc: 33 regs:   0,   10,    5,    0,    0,    0,    0, BEQ ,   20,    5,    0,   26
+  DEBUG   machine:execute_microinstruction executing: jump 79
+  DEBUG   machine:execute_microinstruction control_unit: tick:152 mpc: 34 regs:   0,   10,    5,    0,    0,    0,    0, BEQ ,   20,    5,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:inc($8, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick:153 mpc: 79 regs:   0,   10,    5,    0,    0,    0,    0, BEQ ,   20,    5,    0,   26
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick:154 mpc: 80 regs:   0,   10,    5,    0,    0,    0,    0, BEQ ,   21,    5,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick:155 mpc:  0 regs:   0,   10,    5,    0,    0,    0,    0, BEQ ,   21,    5,    0,   26
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick:156 mpc:  1 regs:   0,   10,    5,    0,    0,    0,   21, BLEQ,   21,    5,    0,   26
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SW -> 20
+  DEBUG   machine:execute_microinstruction control_unit: tick:157 mpc:  2 regs:   0,   10,    5,    0,    0,    0,   21, BLEQ,   21,    5,    0,   26
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BEQ -> 28
+  DEBUG   machine:execute_microinstruction control_unit: tick:158 mpc:  3 regs:   0,   10,    5,    0,    0,    0,   21, BLEQ,   21,    5,    0,   26
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BLEQ -> 37
+  DEBUG   machine:execute_microinstruction control_unit: tick:159 mpc:  4 regs:   0,   10,    5,    0,    0,    0,   21, BLEQ,   21,    5,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:160 mpc: 37 regs:   0,   10,    5,    0,    0,    0,   21, BLEQ,   21,    5,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $9
+  DEBUG   machine:execute_microinstruction control_unit: tick:161 mpc: 38 regs:   0,   10,    5,    0,    0,    0,    1, BLEQ,   21,    5,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:162 mpc: 39 regs:   0,   10,    5,    0,    0,    0,    1, BLEQ,   21,   10,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick:163 mpc: 40 regs:   0,   10,    5,    0,    0,    0,    2, BLEQ,   21,   10,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick:164 mpc: 41 regs:   0,   10,    5,    0,    0,    0,    2, BLEQ,   21,   10,    5,   26
+  DEBUG   machine:execute_microinstruction executing: jmp:sub(9, 10) Z -> 44 C -> 44
+  DEBUG   machine:execute_microinstruction control_unit: tick:165 mpc: 42 regs:   0,   10,    5,    0,    0,    0,    2, BLEQ,   21,   10,    5,   24
+  DEBUG   machine:execute_microinstruction executing: jump 79
+  DEBUG   machine:execute_microinstruction control_unit: tick:166 mpc: 43 regs:   0,   10,    5,    0,    0,    0,    2, BLEQ,   21,   10,    5,   24
+  DEBUG   machine:execute_microinstruction executing: op:inc($8, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick:167 mpc: 79 regs:   0,   10,    5,    0,    0,    0,    2, BLEQ,   21,   10,    5,   24
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick:168 mpc: 80 regs:   0,   10,    5,    0,    0,    0,    2, BLEQ,   22,   10,    5,   24
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick:169 mpc:  0 regs:   0,   10,    5,    0,    0,    0,    2, BLEQ,   22,   10,    5,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick:170 mpc:  1 regs:   0,   10,    5,    0,    0,    0,   22, SUB ,   22,   10,    5,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SW -> 20
+  DEBUG   machine:execute_microinstruction control_unit: tick:171 mpc:  2 regs:   0,   10,    5,    0,    0,    0,   22, SUB ,   22,   10,    5,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BEQ -> 28
+  DEBUG   machine:execute_microinstruction control_unit: tick:172 mpc:  3 regs:   0,   10,    5,    0,    0,    0,   22, SUB ,   22,   10,    5,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BLEQ -> 37
+  DEBUG   machine:execute_microinstruction control_unit: tick:173 mpc:  4 regs:   0,   10,    5,    0,    0,    0,   22, SUB ,   22,   10,    5,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) ADDI -> 46
+  DEBUG   machine:execute_microinstruction control_unit: tick:174 mpc:  5 regs:   0,   10,    5,    0,    0,    0,   22, SUB ,   22,   10,    5,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) ANDI -> 52
+  DEBUG   machine:execute_microinstruction control_unit: tick:175 mpc:  6 regs:   0,   10,    5,    0,    0,    0,   22, SUB ,   22,   10,    5,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SHR -> 58
+  DEBUG   machine:execute_microinstruction control_unit: tick:176 mpc:  7 regs:   0,   10,    5,    0,    0,    0,   22, SUB ,   22,   10,    5,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) ADD -> 64
+  DEBUG   machine:execute_microinstruction control_unit: tick:177 mpc:  8 regs:   0,   10,    5,    0,    0,    0,   22, SUB ,   22,   10,    5,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SUB -> 71
+  DEBUG   machine:execute_microinstruction control_unit: tick:178 mpc:  9 regs:   0,   10,    5,    0,    0,    0,   22, SUB ,   22,   10,    5,   24
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:179 mpc: 71 regs:   0,   10,    5,    0,    0,    0,   22, SUB ,   22,   10,    5,   24
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick:180 mpc: 72 regs:   0,   10,    5,    0,    0,    0,    1, SUB ,   22,   10,    5,   24
+  DEBUG   machine:execute_microinstruction executing: op:mask_thrd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:181 mpc: 73 regs:   0,   10,    5,    0,    0,    0,    1, SUB ,   22,   10,   10,   24
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick:182 mpc: 74 regs:   0,   10,    5,    0,    0,    0,    2, SUB ,   22,   10,   10,   24
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:183 mpc: 75 regs:   0,   10,    5,    0,    0,    0,    2, SUB ,   22,   10,   10,    5
+  DEBUG   machine:execute_microinstruction executing: op:sub($10, $11) -> $-1
+  DEBUG   machine:execute_microinstruction control_unit: tick:184 mpc: 76 regs:   0,   10,    5,    0,    0,    0,    1, SUB ,   22,   10,   10,    5
+  DEBUG   machine:execute_microinstruction executing: jump 79
+  DEBUG   machine:execute_microinstruction control_unit: tick:185 mpc: 77 regs:   0,    5,    5,    0,    0,    0,    1, SUB ,   22,   10,   10,    5
+  DEBUG   machine:execute_microinstruction executing: op:inc($8, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick:186 mpc: 79 regs:   0,    5,    5,    0,    0,    0,    1, SUB ,   22,   10,   10,    5
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick:187 mpc: 80 regs:   0,    5,    5,    0,    0,    0,    1, SUB ,   23,   10,   10,    5
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick:188 mpc:  0 regs:   0,    5,    5,    0,    0,    0,    1, SUB ,   23,   10,   10,    5
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick:189 mpc:  1 regs:   0,    5,    5,    0,    0,    0,   23, BEQ ,   23,   10,   10,    5
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SW -> 20
+  DEBUG   machine:execute_microinstruction control_unit: tick:190 mpc:  2 regs:   0,    5,    5,    0,    0,    0,   23, BEQ ,   23,   10,   10,    5
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BEQ -> 28
+  DEBUG   machine:execute_microinstruction control_unit: tick:191 mpc:  3 regs:   0,    5,    5,    0,    0,    0,   23, BEQ ,   23,   10,   10,    5
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:192 mpc: 28 regs:   0,    5,    5,    0,    0,    0,   23, BEQ ,   23,   10,   10,    5
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $9
+  DEBUG   machine:execute_microinstruction control_unit: tick:193 mpc: 29 regs:   0,    5,    5,    0,    0,    0,    0, BEQ ,   23,   10,   10,    5
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:194 mpc: 30 regs:   0,    5,    5,    0,    0,    0,    0, BEQ ,   23,    0,   10,    5
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick:195 mpc: 31 regs:   0,    5,    5,    0,    0,    0,    0, BEQ ,   23,    0,   10,    5
+  DEBUG   machine:execute_microinstruction executing: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick:196 mpc: 32 regs:   0,    5,    5,    0,    0,    0,    0, BEQ ,   23,    0,    0,    5
+  DEBUG   machine:execute_microinstruction executing: jmp:sub(9, 10) Z -> 35
+  DEBUG   machine:execute_microinstruction control_unit: tick:197 mpc: 33 regs:   0,    5,    5,    0,    0,    0,    0, BEQ ,   23,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: op:only_x($11, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick:198 mpc: 35 regs:   0,    5,    5,    0,    0,    0,    0, BEQ ,   23,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick:199 mpc: 36 regs:   0,    5,    5,    0,    0,    0,    0, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick:200 mpc:  0 regs:   0,    5,    5,    0,    0,    0,    0, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick:201 mpc:  1 regs:   0,    5,    5,    0,    0,    0,   20, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SW -> 20
+  DEBUG   machine:execute_microinstruction control_unit: tick:202 mpc:  2 regs:   0,    5,    5,    0,    0,    0,   20, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BEQ -> 28
+  DEBUG   machine:execute_microinstruction control_unit: tick:203 mpc:  3 regs:   0,    5,    5,    0,    0,    0,   20, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:204 mpc: 28 regs:   0,    5,    5,    0,    0,    0,   20, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $9
+  DEBUG   machine:execute_microinstruction control_unit: tick:205 mpc: 29 regs:   0,    5,    5,    0,    0,    0,    2, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:206 mpc: 30 regs:   0,    5,    5,    0,    0,    0,    2, BEQ ,   20,    5,    0,   20
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick:207 mpc: 31 regs:   0,    5,    5,    0,    0,    0,    0, BEQ ,   20,    5,    0,   20
+  DEBUG   machine:execute_microinstruction executing: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick:208 mpc: 32 regs:   0,    5,    5,    0,    0,    0,    0, BEQ ,   20,    5,    0,   20
+  DEBUG   machine:execute_microinstruction executing: jmp:sub(9, 10) Z -> 35
+  DEBUG   machine:execute_microinstruction control_unit: tick:209 mpc: 33 regs:   0,    5,    5,    0,    0,    0,    0, BEQ ,   20,    5,    0,   26
+  DEBUG   machine:execute_microinstruction executing: jump 79
+  DEBUG   machine:execute_microinstruction control_unit: tick:210 mpc: 34 regs:   0,    5,    5,    0,    0,    0,    0, BEQ ,   20,    5,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:inc($8, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick:211 mpc: 79 regs:   0,    5,    5,    0,    0,    0,    0, BEQ ,   20,    5,    0,   26
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick:212 mpc: 80 regs:   0,    5,    5,    0,    0,    0,    0, BEQ ,   21,    5,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick:213 mpc:  0 regs:   0,    5,    5,    0,    0,    0,    0, BEQ ,   21,    5,    0,   26
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick:214 mpc:  1 regs:   0,    5,    5,    0,    0,    0,   21, BLEQ,   21,    5,    0,   26
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SW -> 20
+  DEBUG   machine:execute_microinstruction control_unit: tick:215 mpc:  2 regs:   0,    5,    5,    0,    0,    0,   21, BLEQ,   21,    5,    0,   26
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BEQ -> 28
+  DEBUG   machine:execute_microinstruction control_unit: tick:216 mpc:  3 regs:   0,    5,    5,    0,    0,    0,   21, BLEQ,   21,    5,    0,   26
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BLEQ -> 37
+  DEBUG   machine:execute_microinstruction control_unit: tick:217 mpc:  4 regs:   0,    5,    5,    0,    0,    0,   21, BLEQ,   21,    5,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:218 mpc: 37 regs:   0,    5,    5,    0,    0,    0,   21, BLEQ,   21,    5,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $9
+  DEBUG   machine:execute_microinstruction control_unit: tick:219 mpc: 38 regs:   0,    5,    5,    0,    0,    0,    1, BLEQ,   21,    5,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:220 mpc: 39 regs:   0,    5,    5,    0,    0,    0,    1, BLEQ,   21,    5,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick:221 mpc: 40 regs:   0,    5,    5,    0,    0,    0,    2, BLEQ,   21,    5,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick:222 mpc: 41 regs:   0,    5,    5,    0,    0,    0,    2, BLEQ,   21,    5,    5,   26
+  DEBUG   machine:execute_microinstruction executing: jmp:sub(9, 10) Z -> 44 C -> 44
+  DEBUG   machine:execute_microinstruction control_unit: tick:223 mpc: 42 regs:   0,    5,    5,    0,    0,    0,    2, BLEQ,   21,    5,    5,   24
+  DEBUG   machine:execute_microinstruction executing: op:only_x($11, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick:224 mpc: 44 regs:   0,    5,    5,    0,    0,    0,    2, BLEQ,   21,    5,    5,   24
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick:225 mpc: 45 regs:   0,    5,    5,    0,    0,    0,    2, BLEQ,   24,    5,    5,   24
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick:226 mpc:  0 regs:   0,    5,    5,    0,    0,    0,    2, BLEQ,   24,    5,    5,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick:227 mpc:  1 regs:   0,    5,    5,    0,    0,    0,   24, SUB ,   24,    5,    5,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SW -> 20
+  DEBUG   machine:execute_microinstruction control_unit: tick:228 mpc:  2 regs:   0,    5,    5,    0,    0,    0,   24, SUB ,   24,    5,    5,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BEQ -> 28
+  DEBUG   machine:execute_microinstruction control_unit: tick:229 mpc:  3 regs:   0,    5,    5,    0,    0,    0,   24, SUB ,   24,    5,    5,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BLEQ -> 37
+  DEBUG   machine:execute_microinstruction control_unit: tick:230 mpc:  4 regs:   0,    5,    5,    0,    0,    0,   24, SUB ,   24,    5,    5,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) ADDI -> 46
+  DEBUG   machine:execute_microinstruction control_unit: tick:231 mpc:  5 regs:   0,    5,    5,    0,    0,    0,   24, SUB ,   24,    5,    5,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) ANDI -> 52
+  DEBUG   machine:execute_microinstruction control_unit: tick:232 mpc:  6 regs:   0,    5,    5,    0,    0,    0,   24, SUB ,   24,    5,    5,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SHR -> 58
+  DEBUG   machine:execute_microinstruction control_unit: tick:233 mpc:  7 regs:   0,    5,    5,    0,    0,    0,   24, SUB ,   24,    5,    5,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) ADD -> 64
+  DEBUG   machine:execute_microinstruction control_unit: tick:234 mpc:  8 regs:   0,    5,    5,    0,    0,    0,   24, SUB ,   24,    5,    5,   24
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SUB -> 71
+  DEBUG   machine:execute_microinstruction control_unit: tick:235 mpc:  9 regs:   0,    5,    5,    0,    0,    0,   24, SUB ,   24,    5,    5,   24
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:236 mpc: 71 regs:   0,    5,    5,    0,    0,    0,   24, SUB ,   24,    5,    5,   24
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick:237 mpc: 72 regs:   0,    5,    5,    0,    0,    0,    2, SUB ,   24,    5,    5,   24
+  DEBUG   machine:execute_microinstruction executing: op:mask_thrd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:238 mpc: 73 regs:   0,    5,    5,    0,    0,    0,    2, SUB ,   24,    5,    5,   24
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick:239 mpc: 74 regs:   0,    5,    5,    0,    0,    0,    1, SUB ,   24,    5,    5,   24
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:240 mpc: 75 regs:   0,    5,    5,    0,    0,    0,    1, SUB ,   24,    5,    5,    5
+  DEBUG   machine:execute_microinstruction executing: op:sub($10, $11) -> $-1
+  DEBUG   machine:execute_microinstruction control_unit: tick:241 mpc: 76 regs:   0,    5,    5,    0,    0,    0,    2, SUB ,   24,    5,    5,    5
+  DEBUG   machine:execute_microinstruction executing: jump 79
+  DEBUG   machine:execute_microinstruction control_unit: tick:242 mpc: 77 regs:   0,    5,    0,    0,    0,    0,    2, SUB ,   24,    5,    5,    5
+  DEBUG   machine:execute_microinstruction executing: op:inc($8, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick:243 mpc: 79 regs:   0,    5,    0,    0,    0,    0,    2, SUB ,   24,    5,    5,    5
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick:244 mpc: 80 regs:   0,    5,    0,    0,    0,    0,    2, SUB ,   25,    5,    5,    5
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick:245 mpc:  0 regs:   0,    5,    0,    0,    0,    0,    2, SUB ,   25,    5,    5,    5
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick:246 mpc:  1 regs:   0,    5,    0,    0,    0,    0,   25, BEQ ,   25,    5,    5,    5
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SW -> 20
+  DEBUG   machine:execute_microinstruction control_unit: tick:247 mpc:  2 regs:   0,    5,    0,    0,    0,    0,   25, BEQ ,   25,    5,    5,    5
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BEQ -> 28
+  DEBUG   machine:execute_microinstruction control_unit: tick:248 mpc:  3 regs:   0,    5,    0,    0,    0,    0,   25, BEQ ,   25,    5,    5,    5
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:249 mpc: 28 regs:   0,    5,    0,    0,    0,    0,   25, BEQ ,   25,    5,    5,    5
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $9
+  DEBUG   machine:execute_microinstruction control_unit: tick:250 mpc: 29 regs:   0,    5,    0,    0,    0,    0,    0, BEQ ,   25,    5,    5,    5
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:251 mpc: 30 regs:   0,    5,    0,    0,    0,    0,    0, BEQ ,   25,    0,    5,    5
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick:252 mpc: 31 regs:   0,    5,    0,    0,    0,    0,    0, BEQ ,   25,    0,    5,    5
+  DEBUG   machine:execute_microinstruction executing: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick:253 mpc: 32 regs:   0,    5,    0,    0,    0,    0,    0, BEQ ,   25,    0,    0,    5
+  DEBUG   machine:execute_microinstruction executing: jmp:sub(9, 10) Z -> 35
+  DEBUG   machine:execute_microinstruction control_unit: tick:254 mpc: 33 regs:   0,    5,    0,    0,    0,    0,    0, BEQ ,   25,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: op:only_x($11, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick:255 mpc: 35 regs:   0,    5,    0,    0,    0,    0,    0, BEQ ,   25,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick:256 mpc: 36 regs:   0,    5,    0,    0,    0,    0,    0, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick:257 mpc:  0 regs:   0,    5,    0,    0,    0,    0,    0, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick:258 mpc:  1 regs:   0,    5,    0,    0,    0,    0,   20, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SW -> 20
+  DEBUG   machine:execute_microinstruction control_unit: tick:259 mpc:  2 regs:   0,    5,    0,    0,    0,    0,   20, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BEQ -> 28
+  DEBUG   machine:execute_microinstruction control_unit: tick:260 mpc:  3 regs:   0,    5,    0,    0,    0,    0,   20, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:261 mpc: 28 regs:   0,    5,    0,    0,    0,    0,   20, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $9
+  DEBUG   machine:execute_microinstruction control_unit: tick:262 mpc: 29 regs:   0,    5,    0,    0,    0,    0,    2, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:263 mpc: 30 regs:   0,    5,    0,    0,    0,    0,    2, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick:264 mpc: 31 regs:   0,    5,    0,    0,    0,    0,    0, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick:265 mpc: 32 regs:   0,    5,    0,    0,    0,    0,    0, BEQ ,   20,    0,    0,   20
+  DEBUG   machine:execute_microinstruction executing: jmp:sub(9, 10) Z -> 35
+  DEBUG   machine:execute_microinstruction control_unit: tick:266 mpc: 33 regs:   0,    5,    0,    0,    0,    0,    0, BEQ ,   20,    0,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:only_x($11, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick:267 mpc: 35 regs:   0,    5,    0,    0,    0,    0,    0, BEQ ,   20,    0,    0,   26
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick:268 mpc: 36 regs:   0,    5,    0,    0,    0,    0,    0, BEQ ,   26,    0,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick:269 mpc:  0 regs:   0,    5,    0,    0,    0,    0,    0, BEQ ,   26,    0,    0,   26
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick:270 mpc:  1 regs:   0,    5,    0,    0,    0,    0,   26, LW  ,   26,    0,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:271 mpc: 11 regs:   0,    5,    0,    0,    0,    0,   26, LW  ,   26,    0,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick:272 mpc: 12 regs:   0,    5,    0,    0,    0,    0,    0, LW  ,   26,    0,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick:273 mpc: 13 regs:   0,    5,    0,    0,    0,    0,    0, LW  ,   26,    0,    0,   26
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $9
+  DEBUG   machine:execute_microinstruction control_unit: tick:274 mpc: 14 regs:   0,    5,    0,    0,    0,    0,    0, LW  ,   26,    0,    0,    0
+  DEBUG   machine:execute_microinstruction executing: op:add($10, $11) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:275 mpc: 15 regs:   0,    5,    0,    0,    0,    0,    0, LW  ,   26,    2,    0,    0
+  DEBUG   machine:execute_microinstruction executing: op:only_x($0, $0) -> $0 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick:276 mpc: 16 regs:   0,    5,    0,    0,    0,    0,    0, LW  ,   26,    2,    0,    0
+  DEBUG   machine:execute_microinstruction executing: op:only_x($9, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:277 mpc: 17 regs:   0,    5,    0,    0,    0,    0,    0,   48,   26,    2,    0,    0
+  DEBUG   machine:execute_microinstruction executing: op:only_x($7, $0) -> $-1
+  DEBUG   machine:execute_microinstruction control_unit: tick:278 mpc: 18 regs:   0,    5,    0,    0,    0,    0,    2,   48,   26,    2,    0,    0
+  DEBUG   machine:execute_microinstruction executing: jump 79
+  DEBUG   machine:execute_microinstruction control_unit: tick:279 mpc: 19 regs:   0,    5,   48,    0,    0,    0,    2,   48,   26,    2,    0,    0
+  DEBUG   machine:execute_microinstruction executing: op:inc($8, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick:280 mpc: 79 regs:   0,    5,   48,    0,    0,    0,    2,   48,   26,    2,    0,    0
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick:281 mpc: 80 regs:   0,    5,   48,    0,    0,    0,    2,   48,   27,    2,    0,    0
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick:282 mpc:  0 regs:   0,    5,   48,    0,    0,    0,    2,   48,   27,    2,    0,    0
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick:283 mpc:  1 regs:   0,    5,   48,    0,    0,    0,   27, SW  ,   27,    2,    0,    0
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SW -> 20
+  DEBUG   machine:execute_microinstruction control_unit: tick:284 mpc:  2 regs:   0,    5,   48,    0,    0,    0,   27, SW  ,   27,    2,    0,    0
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:285 mpc: 20 regs:   0,    5,   48,    0,    0,    0,   27, SW  ,   27,    2,    0,    0
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $9
+  DEBUG   machine:execute_microinstruction control_unit: tick:286 mpc: 21 regs:   0,    5,   48,    0,    0,    0,    2, SW  ,   27,    2,    0,    0
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:287 mpc: 22 regs:   0,    5,   48,    0,    0,    0,    2, SW  ,   27,   48,    0,    0
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick:288 mpc: 23 regs:   0,    5,   48,    0,    0,    0,    0, SW  ,   27,   48,    0,    0
+  DEBUG   machine:execute_microinstruction executing: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick:289 mpc: 24 regs:   0,    5,   48,    0,    0,    0,    0, SW  ,   27,   48,    0,    0
+  DEBUG   machine:execute_microinstruction executing: op:add($10, $11) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:290 mpc: 25 regs:   0,    5,   48,    0,    0,    0,    0, SW  ,   27,   48,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: op:only_x($9, $0) -> $7 WR
+  DEBUG   machine:execute_microinstruction control_unit: tick:291 mpc: 26 regs:   0,    5,   48,    0,    0,    0, 65281, SW  ,   27,   48,    0, 65281
+  DEBUG   machine:signal_mem_wr output: 0
+  DEBUG   machine:execute_microinstruction executing: jump 79
+  DEBUG   machine:execute_microinstruction control_unit: tick:292 mpc: 27 regs:   0,    5,   48,    0,    0,    0, 65281,   48,   27,   48,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: op:inc($8, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick:293 mpc: 79 regs:   0,    5,   48,    0,    0,    0, 65281,   48,   27,   48,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick:294 mpc: 80 regs:   0,    5,   48,    0,    0,    0, 65281,   48,   28,   48,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick:295 mpc:  0 regs:   0,    5,   48,    0,    0,    0, 65281,   48,   28,   48,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick:296 mpc:  1 regs:   0,    5,   48,    0,    0,    0,   28, ADDI,   28,   48,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SW -> 20
+  DEBUG   machine:execute_microinstruction control_unit: tick:297 mpc:  2 regs:   0,    5,   48,    0,    0,    0,   28, ADDI,   28,   48,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BEQ -> 28
+  DEBUG   machine:execute_microinstruction control_unit: tick:298 mpc:  3 regs:   0,    5,   48,    0,    0,    0,   28, ADDI,   28,   48,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BLEQ -> 37
+  DEBUG   machine:execute_microinstruction control_unit: tick:299 mpc:  4 regs:   0,    5,   48,    0,    0,    0,   28, ADDI,   28,   48,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) ADDI -> 46
+  DEBUG   machine:execute_microinstruction control_unit: tick:300 mpc:  5 regs:   0,    5,   48,    0,    0,    0,   28, ADDI,   28,   48,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:301 mpc: 46 regs:   0,    5,   48,    0,    0,    0,   28, ADDI,   28,   48,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick:302 mpc: 47 regs:   0,    5,   48,    0,    0,    0,    0, ADDI,   28,   48,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick:303 mpc: 48 regs:   0,    5,   48,    0,    0,    0,    0, ADDI,   28,   48,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:304 mpc: 49 regs:   0,    5,   48,    0,    0,    0,    0, ADDI,   28,   48,    0,    1
+  DEBUG   machine:execute_microinstruction executing: op:add($10, $11) -> $-1
+  DEBUG   machine:execute_microinstruction control_unit: tick:305 mpc: 50 regs:   0,    5,   48,    0,    0,    0,    2, ADDI,   28,   48,    0,    1
+  DEBUG   machine:execute_microinstruction executing: jump 79
+  DEBUG   machine:execute_microinstruction control_unit: tick:306 mpc: 51 regs:   0,    5,    1,    0,    0,    0,    2, ADDI,   28,   48,    0,    1
+  DEBUG   machine:execute_microinstruction executing: op:inc($8, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick:307 mpc: 79 regs:   0,    5,    1,    0,    0,    0,    2, ADDI,   28,   48,    0,    1
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick:308 mpc: 80 regs:   0,    5,    1,    0,    0,    0,    2, ADDI,   29,   48,    0,    1
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick:309 mpc:  0 regs:   0,    5,    1,    0,    0,    0,    2, ADDI,   29,   48,    0,    1
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick:310 mpc:  1 regs:   0,    5,    1,    0,    0,    0,   29, LW  ,   29,   48,    0,    1
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:311 mpc: 11 regs:   0,    5,    1,    0,    0,    0,   29, LW  ,   29,   48,    0,    1
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick:312 mpc: 12 regs:   0,    5,    1,    0,    0,    0,    2, LW  ,   29,   48,    0,    1
+  DEBUG   machine:execute_microinstruction executing: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick:313 mpc: 13 regs:   0,    5,    1,    0,    0,    0,    2, LW  ,   29,   48,    1,    1
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $9
+  DEBUG   machine:execute_microinstruction control_unit: tick:314 mpc: 14 regs:   0,    5,    1,    0,    0,    0,    2, LW  ,   29,   48,    1,    0
+  DEBUG   machine:execute_microinstruction executing: op:add($10, $11) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:315 mpc: 15 regs:   0,    5,    1,    0,    0,    0,    2, LW  ,   29,    2,    1,    0
+  DEBUG   machine:execute_microinstruction executing: op:only_x($0, $0) -> $0 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick:316 mpc: 16 regs:   0,    5,    1,    0,    0,    0,    1, LW  ,   29,    2,    1,    0
+  DEBUG   machine:execute_microinstruction executing: op:only_x($9, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:317 mpc: 17 regs:   0,    5,    1,    0,    0,    0,    1,  120,   29,    2,    1,    0
+  DEBUG   machine:execute_microinstruction executing: op:only_x($7, $0) -> $-1
+  DEBUG   machine:execute_microinstruction control_unit: tick:318 mpc: 18 regs:   0,    5,    1,    0,    0,    0,    2,  120,   29,    2,    1,    0
+  DEBUG   machine:execute_microinstruction executing: jump 79
+  DEBUG   machine:execute_microinstruction control_unit: tick:319 mpc: 19 regs:   0,    5,  120,    0,    0,    0,    2,  120,   29,    2,    1,    0
+  DEBUG   machine:execute_microinstruction executing: op:inc($8, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick:320 mpc: 79 regs:   0,    5,  120,    0,    0,    0,    2,  120,   29,    2,    1,    0
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick:321 mpc: 80 regs:   0,    5,  120,    0,    0,    0,    2,  120,   30,    2,    1,    0
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick:322 mpc:  0 regs:   0,    5,  120,    0,    0,    0,    2,  120,   30,    2,    1,    0
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick:323 mpc:  1 regs:   0,    5,  120,    0,    0,    0,   30, SW  ,   30,    2,    1,    0
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SW -> 20
+  DEBUG   machine:execute_microinstruction control_unit: tick:324 mpc:  2 regs:   0,    5,  120,    0,    0,    0,   30, SW  ,   30,    2,    1,    0
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:325 mpc: 20 regs:   0,    5,  120,    0,    0,    0,   30, SW  ,   30,    2,    1,    0
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $9
+  DEBUG   machine:execute_microinstruction control_unit: tick:326 mpc: 21 regs:   0,    5,  120,    0,    0,    0,    2, SW  ,   30,    2,    1,    0
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:327 mpc: 22 regs:   0,    5,  120,    0,    0,    0,    2, SW  ,   30,  120,    1,    0
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick:328 mpc: 23 regs:   0,    5,  120,    0,    0,    0,    0, SW  ,   30,  120,    1,    0
+  DEBUG   machine:execute_microinstruction executing: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick:329 mpc: 24 regs:   0,    5,  120,    0,    0,    0,    0, SW  ,   30,  120,    0,    0
+  DEBUG   machine:execute_microinstruction executing: op:add($10, $11) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:330 mpc: 25 regs:   0,    5,  120,    0,    0,    0,    0, SW  ,   30,  120,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: op:only_x($9, $0) -> $7 WR
+  DEBUG   machine:execute_microinstruction control_unit: tick:331 mpc: 26 regs:   0,    5,  120,    0,    0,    0, 65281, SW  ,   30,  120,    0, 65281
+  DEBUG   machine:signal_mem_wr output: x
+  DEBUG   machine:execute_microinstruction executing: jump 79
+  DEBUG   machine:execute_microinstruction control_unit: tick:332 mpc: 27 regs:   0,    5,  120,    0,    0,    0, 65281,  120,   30,  120,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: op:inc($8, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick:333 mpc: 79 regs:   0,    5,  120,    0,    0,    0, 65281,  120,   30,  120,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick:334 mpc: 80 regs:   0,    5,  120,    0,    0,    0, 65281,  120,   31,  120,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick:335 mpc:  0 regs:   0,    5,  120,    0,    0,    0, 65281,  120,   31,  120,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick:336 mpc:  1 regs:   0,    5,  120,    0,    0,    0,   31, ANDI,   31,  120,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SW -> 20
+  DEBUG   machine:execute_microinstruction control_unit: tick:337 mpc:  2 regs:   0,    5,  120,    0,    0,    0,   31, ANDI,   31,  120,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BEQ -> 28
+  DEBUG   machine:execute_microinstruction control_unit: tick:338 mpc:  3 regs:   0,    5,  120,    0,    0,    0,   31, ANDI,   31,  120,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BLEQ -> 37
+  DEBUG   machine:execute_microinstruction control_unit: tick:339 mpc:  4 regs:   0,    5,  120,    0,    0,    0,   31, ANDI,   31,  120,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) ADDI -> 46
+  DEBUG   machine:execute_microinstruction control_unit: tick:340 mpc:  5 regs:   0,    5,  120,    0,    0,    0,   31, ANDI,   31,  120,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) ANDI -> 52
+  DEBUG   machine:execute_microinstruction control_unit: tick:341 mpc:  6 regs:   0,    5,  120,    0,    0,    0,   31, ANDI,   31,  120,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:342 mpc: 52 regs:   0,    5,  120,    0,    0,    0,   31, ANDI,   31,  120,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick:343 mpc: 53 regs:   0,    5,  120,    0,    0,    0,    1, ANDI,   31,  120,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick:344 mpc: 54 regs:   0,    5,  120,    0,    0,    0,    1, ANDI,   31,  120,    5, 65281
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:345 mpc: 55 regs:   0,    5,  120,    0,    0,    0,    1, ANDI,   31,  120,    5,   15
+  DEBUG   machine:execute_microinstruction executing: op:band($10, $11) -> $-1
+  DEBUG   machine:execute_microinstruction control_unit: tick:346 mpc: 56 regs:   0,    5,  120,    0,    0,    0,    2, ANDI,   31,  120,    5,   15
+  DEBUG   machine:execute_microinstruction executing: jump 79
+  DEBUG   machine:execute_microinstruction control_unit: tick:347 mpc: 57 regs:   0,    5,    5,    0,    0,    0,    2, ANDI,   31,  120,    5,   15
+  DEBUG   machine:execute_microinstruction executing: op:inc($8, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick:348 mpc: 79 regs:   0,    5,    5,    0,    0,    0,    2, ANDI,   31,  120,    5,   15
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick:349 mpc: 80 regs:   0,    5,    5,    0,    0,    0,    2, ANDI,   32,  120,    5,   15
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick:350 mpc:  0 regs:   0,    5,    5,    0,    0,    0,    2, ANDI,   32,  120,    5,   15
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick:351 mpc:  1 regs:   0,    5,    5,    0,    0,    0,   32, LW  ,   32,  120,    5,   15
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:352 mpc: 11 regs:   0,    5,    5,    0,    0,    0,   32, LW  ,   32,  120,    5,   15
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick:353 mpc: 12 regs:   0,    5,    5,    0,    0,    0,    2, LW  ,   32,  120,    5,   15
+  DEBUG   machine:execute_microinstruction executing: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick:354 mpc: 13 regs:   0,    5,    5,    0,    0,    0,    2, LW  ,   32,  120,    5,   15
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $9
+  DEBUG   machine:execute_microinstruction control_unit: tick:355 mpc: 14 regs:   0,    5,    5,    0,    0,    0,    2, LW  ,   32,  120,    5,    2
+  DEBUG   machine:execute_microinstruction executing: op:add($10, $11) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:356 mpc: 15 regs:   0,    5,    5,    0,    0,    0,    2, LW  ,   32,    2,    5,    2
+  DEBUG   machine:execute_microinstruction executing: op:only_x($0, $0) -> $0 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick:357 mpc: 16 regs:   0,    5,    5,    0,    0,    0,    7, LW  ,   32,    2,    5,    2
+  DEBUG   machine:execute_microinstruction executing: op:only_x($9, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:358 mpc: 17 regs:   0,    5,    5,    0,    0,    0,    7,   53,   32,    2,    5,    2
+  DEBUG   machine:execute_microinstruction executing: op:only_x($7, $0) -> $-1
+  DEBUG   machine:execute_microinstruction control_unit: tick:359 mpc: 18 regs:   0,    5,    5,    0,    0,    0,    2,   53,   32,    2,    5,    2
+  DEBUG   machine:execute_microinstruction executing: jump 79
+  DEBUG   machine:execute_microinstruction control_unit: tick:360 mpc: 19 regs:   0,    5,   53,    0,    0,    0,    2,   53,   32,    2,    5,    2
+  DEBUG   machine:execute_microinstruction executing: op:inc($8, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick:361 mpc: 79 regs:   0,    5,   53,    0,    0,    0,    2,   53,   32,    2,    5,    2
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick:362 mpc: 80 regs:   0,    5,   53,    0,    0,    0,    2,   53,   33,    2,    5,    2
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick:363 mpc:  0 regs:   0,    5,   53,    0,    0,    0,    2,   53,   33,    2,    5,    2
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick:364 mpc:  1 regs:   0,    5,   53,    0,    0,    0,   33, SW  ,   33,    2,    5,    2
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SW -> 20
+  DEBUG   machine:execute_microinstruction control_unit: tick:365 mpc:  2 regs:   0,    5,   53,    0,    0,    0,   33, SW  ,   33,    2,    5,    2
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:366 mpc: 20 regs:   0,    5,   53,    0,    0,    0,   33, SW  ,   33,    2,    5,    2
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $9
+  DEBUG   machine:execute_microinstruction control_unit: tick:367 mpc: 21 regs:   0,    5,   53,    0,    0,    0,    2, SW  ,   33,    2,    5,    2
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:368 mpc: 22 regs:   0,    5,   53,    0,    0,    0,    2, SW  ,   33,   53,    5,    2
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick:369 mpc: 23 regs:   0,    5,   53,    0,    0,    0,    0, SW  ,   33,   53,    5,    2
+  DEBUG   machine:execute_microinstruction executing: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick:370 mpc: 24 regs:   0,    5,   53,    0,    0,    0,    0, SW  ,   33,   53,    0,    2
+  DEBUG   machine:execute_microinstruction executing: op:add($10, $11) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:371 mpc: 25 regs:   0,    5,   53,    0,    0,    0,    0, SW  ,   33,   53,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: op:only_x($9, $0) -> $7 WR
+  DEBUG   machine:execute_microinstruction control_unit: tick:372 mpc: 26 regs:   0,    5,   53,    0,    0,    0, 65281, SW  ,   33,   53,    0, 65281
+  DEBUG   machine:signal_mem_wr output: 5
+  DEBUG   machine:execute_microinstruction executing: jump 79
+  DEBUG   machine:execute_microinstruction control_unit: tick:373 mpc: 27 regs:   0,    5,   53,    0,    0,    0, 65281,   53,   33,   53,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: op:inc($8, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick:374 mpc: 79 regs:   0,    5,   53,    0,    0,    0, 65281,   53,   33,   53,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick:375 mpc: 80 regs:   0,    5,   53,    0,    0,    0, 65281,   53,   34,   53,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick:376 mpc:  0 regs:   0,    5,   53,    0,    0,    0, 65281,   53,   34,   53,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick:377 mpc:  1 regs:   0,    5,   53,    0,    0,    0,   34, SHR ,   34,   53,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SW -> 20
+  DEBUG   machine:execute_microinstruction control_unit: tick:378 mpc:  2 regs:   0,    5,   53,    0,    0,    0,   34, SHR ,   34,   53,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BEQ -> 28
+  DEBUG   machine:execute_microinstruction control_unit: tick:379 mpc:  3 regs:   0,    5,   53,    0,    0,    0,   34, SHR ,   34,   53,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BLEQ -> 37
+  DEBUG   machine:execute_microinstruction control_unit: tick:380 mpc:  4 regs:   0,    5,   53,    0,    0,    0,   34, SHR ,   34,   53,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) ADDI -> 46
+  DEBUG   machine:execute_microinstruction control_unit: tick:381 mpc:  5 regs:   0,    5,   53,    0,    0,    0,   34, SHR ,   34,   53,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) ANDI -> 52
+  DEBUG   machine:execute_microinstruction control_unit: tick:382 mpc:  6 regs:   0,    5,   53,    0,    0,    0,   34, SHR ,   34,   53,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SHR -> 58
+  DEBUG   machine:execute_microinstruction control_unit: tick:383 mpc:  7 regs:   0,    5,   53,    0,    0,    0,   34, SHR ,   34,   53,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:384 mpc: 58 regs:   0,    5,   53,    0,    0,    0,   34, SHR ,   34,   53,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick:385 mpc: 59 regs:   0,    5,   53,    0,    0,    0,    1, SHR ,   34,   53,    0, 65281
+  DEBUG   machine:execute_microinstruction executing: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick:386 mpc: 60 regs:   0,    5,   53,    0,    0,    0,    1, SHR ,   34,   53,    5, 65281
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:387 mpc: 61 regs:   0,    5,   53,    0,    0,    0,    1, SHR ,   34,   53,    5,    4
+  DEBUG   machine:execute_microinstruction executing: op:shr($10, $11) -> $-1
+  DEBUG   machine:execute_microinstruction control_unit: tick:388 mpc: 62 regs:   0,    5,   53,    0,    0,    0,    1, SHR ,   34,   53,    5,    4
+  DEBUG   machine:execute_microinstruction executing: jump 79
+  DEBUG   machine:execute_microinstruction control_unit: tick:389 mpc: 63 regs:   0,    0,   53,    0,    0,    0,    1, SHR ,   34,   53,    5,    4
+  DEBUG   machine:execute_microinstruction executing: op:inc($8, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick:390 mpc: 79 regs:   0,    0,   53,    0,    0,    0,    1, SHR ,   34,   53,    5,    4
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick:391 mpc: 80 regs:   0,    0,   53,    0,    0,    0,    1, SHR ,   35,   53,    5,    4
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick:392 mpc:  0 regs:   0,    0,   53,    0,    0,    0,    1, SHR ,   35,   53,    5,    4
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick:393 mpc:  1 regs:   0,    0,   53,    0,    0,    0,   35, BEQ ,   35,   53,    5,    4
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SW -> 20
+  DEBUG   machine:execute_microinstruction control_unit: tick:394 mpc:  2 regs:   0,    0,   53,    0,    0,    0,   35, BEQ ,   35,   53,    5,    4
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BEQ -> 28
+  DEBUG   machine:execute_microinstruction control_unit: tick:395 mpc:  3 regs:   0,    0,   53,    0,    0,    0,   35, BEQ ,   35,   53,    5,    4
+  DEBUG   machine:execute_microinstruction executing: op:mask_fst_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:396 mpc: 28 regs:   0,    0,   53,    0,    0,    0,   35, BEQ ,   35,   53,    5,    4
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $9
+  DEBUG   machine:execute_microinstruction control_unit: tick:397 mpc: 29 regs:   0,    0,   53,    0,    0,    0,    1, BEQ ,   35,   53,    5,    4
+  DEBUG   machine:execute_microinstruction executing: op:mask_snd_r($7, $0) -> $6
+  DEBUG   machine:execute_microinstruction control_unit: tick:398 mpc: 30 regs:   0,    0,   53,    0,    0,    0,    1, BEQ ,   35,    0,    5,    4
+  DEBUG   machine:execute_microinstruction executing: op:only_x($-1, $0) -> $10
+  DEBUG   machine:execute_microinstruction control_unit: tick:399 mpc: 31 regs:   0,    0,   53,    0,    0,    0,    0, BEQ ,   35,    0,    5,    4
+  DEBUG   machine:execute_microinstruction executing: op:mask_imm($7, $0) -> $11
+  DEBUG   machine:execute_microinstruction control_unit: tick:400 mpc: 32 regs:   0,    0,   53,    0,    0,    0,    0, BEQ ,   35,    0,    0,    4
+  DEBUG   machine:execute_microinstruction executing: jmp:sub(9, 10) Z -> 35
+  DEBUG   machine:execute_microinstruction control_unit: tick:401 mpc: 33 regs:   0,    0,   53,    0,    0,    0,    0, BEQ ,   35,    0,    0,   37
+  DEBUG   machine:execute_microinstruction executing: op:only_x($11, $0) -> $8
+  DEBUG   machine:execute_microinstruction control_unit: tick:402 mpc: 35 regs:   0,    0,   53,    0,    0,    0,    0, BEQ ,   35,    0,    0,   37
+  DEBUG   machine:execute_microinstruction executing: jump 0
+  DEBUG   machine:execute_microinstruction control_unit: tick:403 mpc: 36 regs:   0,    0,   53,    0,    0,    0,    0, BEQ ,   37,    0,    0,   37
+  DEBUG   machine:execute_microinstruction executing: op:only_x($8, $0) -> $6 RD
+  DEBUG   machine:execute_microinstruction control_unit: tick:404 mpc:  0 regs:   0,    0,   53,    0,    0,    0,    0, BEQ ,   37,    0,    0,   37
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) LW -> 11
+  DEBUG   machine:execute_microinstruction control_unit: tick:405 mpc:  1 regs:   0,    0,   53,    0,    0,    0,   37, HALT,   37,    0,    0,   37
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SW -> 20
+  DEBUG   machine:execute_microinstruction control_unit: tick:406 mpc:  2 regs:   0,    0,   53,    0,    0,    0,   37, HALT,   37,    0,    0,   37
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BEQ -> 28
+  DEBUG   machine:execute_microinstruction control_unit: tick:407 mpc:  3 regs:   0,    0,   53,    0,    0,    0,   37, HALT,   37,    0,    0,   37
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) BLEQ -> 37
+  DEBUG   machine:execute_microinstruction control_unit: tick:408 mpc:  4 regs:   0,    0,   53,    0,    0,    0,   37, HALT,   37,    0,    0,   37
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) ADDI -> 46
+  DEBUG   machine:execute_microinstruction control_unit: tick:409 mpc:  5 regs:   0,    0,   53,    0,    0,    0,   37, HALT,   37,    0,    0,   37
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) ANDI -> 52
+  DEBUG   machine:execute_microinstruction control_unit: tick:410 mpc:  6 regs:   0,    0,   53,    0,    0,    0,   37, HALT,   37,    0,    0,   37
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SHR -> 58
+  DEBUG   machine:execute_microinstruction control_unit: tick:411 mpc:  7 regs:   0,    0,   53,    0,    0,    0,   37, HALT,   37,    0,    0,   37
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) ADD -> 64
+  DEBUG   machine:execute_microinstruction control_unit: tick:412 mpc:  8 regs:   0,    0,   53,    0,    0,    0,   37, HALT,   37,    0,    0,   37
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) SUB -> 71
+  DEBUG   machine:execute_microinstruction control_unit: tick:413 mpc:  9 regs:   0,    0,   53,    0,    0,    0,   37, HALT,   37,    0,    0,   37
+  DEBUG   machine:execute_microinstruction executing: jmp:only_x(7, 0) HALT -> 78
+  DEBUG   machine:execute_microinstruction control_unit: tick:414 mpc: 10 regs:   0,    0,   53,    0,    0,    0,   37, HALT,   37,    0,    0,   37
+  DEBUG   machine:execute_microinstruction executing: op:only_x($0, $0) -> $0 STOP
+  DEBUG   machine:execute_microinstruction control_unit: tick:415 mpc: 78 regs:   0,    0,   53,    0,    0,    0,   37, HALT,   37,    0,    0,   37
