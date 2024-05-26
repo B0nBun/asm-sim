@@ -115,12 +115,14 @@ class ControlUnit:
     mpc: int
     data_path: DataPath
     _tick: int
+    _instructions: int
 
     def __init__(self, microcode: list[isa.MInstruction], data_path: DataPath) -> None:
         self.microcode = microcode
         self.mpc = 0
         self.data_path = data_path
         self._tick = 0
+        self._instructions = 0
 
     def tick(self) -> None:
         self._tick += 1
@@ -129,6 +131,8 @@ class ControlUnit:
         self.mpc = mpc_sel
 
     def execute_microinstruction(self) -> None:
+        if self.mpc == 1:
+            self._instructions += 1
         minstr = self.microcode[self.mpc]
         logging.debug("executing: %s", minstr)
         logging.debug("control_unit: %s", self)

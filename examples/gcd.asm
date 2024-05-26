@@ -1,8 +1,8 @@
 hex_prefix: "0x"
 hex: "0123456789ABCDEF"
 start:
-    addi $1, $0, 10
-    addi $2, $0, 20
+    addi $1, $0, 3233
+    addi $2, $0, 3127
 
 loop:
     beq $2, $0, print_a
