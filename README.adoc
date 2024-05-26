@@ -85,6 +85,7 @@ break:
 |`ADDI`    | $x, $y, imm   | Сохранить сумму `$y + imm` в регистр `$x`
 |`ANDI`    | $x, $y, imm   | Сохранить битовое И `$y & imm` в регистр `$x`
 |`ADD`     | $x, $y, $z    | Сохранить `$y + $z` в регистр `$x`
+|`SUB`     | $x, $y, $z    | Сохранить `$y - $z` в регистр `$x`
 |`SHR`     | $x, $y, imm   | Сохранить битовый сдвиг `$y >> imm` в регистр `$x`
 |`HALT`    | -             | Остановить работу программы
 |===
@@ -239,7 +240,72 @@ regs[ar]    |  ‖         ‖            | |  |  |          |      |
 
 CI при помощи Github Actions:
 
-TODO
+[source,yaml]
+----
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+defaults:
+  run:
+    working-directory: ./
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install poetry
+          poetry install
+
+      - name: Run tests and collect coverage
+        run: |
+          poetry run coverage run -m pytest .
+          poetry run coverage report -m
+        env:
+          CI: true
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install poetry
+          poetry install
+
+      - name: Check code formatting with Ruff
+        run: poetry run ruff format --check .
+
+      - name: Run Ruff linters
+        run: poetry run ruff check .
+
+      - name: Type checking with mypy
+        run: poetry run mypy
+----
 
 Пример использования и журнал работы процессора на примере link:examples/cat.asm:
 
@@ -302,20 +368,21 @@ cat
 [source,bash]
 ----
 $ poetry run pytest . -v
-============================================================= test session starts =============================================================
+============================= test session starts ==============================
 platform linux -- Python 3.10.12, pytest-7.4.4, pluggy-1.5.0 -- /home/bonbon/.cache/pypoetry/virtualenvs/asm-sim-M9AJxD4x-py3.10/bin/python
 cachedir: .pytest_cache
 rootdir: /home/bonbon/itmo/arch/lab3
 configfile: pyproject.toml
 plugins: golden-0.2.2
-collected 4 items                                                                                                                             
+collected 5 items                                                              
 
-src/golden_test.py::test_translator_asm_and_machine[golden/fib.yml] PASSED                                                              [ 25%]
-src/golden_test.py::test_translator_asm_and_machine[golden/hello.yml] PASSED                                                            [ 50%]
-src/golden_test.py::test_translator_asm_and_machine[golden/hello_user_name.yml] PASSED                                                  [ 75%]
-src/golden_test.py::test_translator_asm_and_machine[golden/cat.yml] PASSED                                                              [100%]
+src/golden_test.py::test_translator_asm_and_machine[golden/fib.yml] PASSED [ 20%]
+src/golden_test.py::test_translator_asm_and_machine[golden/hello.yml] PASSED [ 40%]
+src/golden_test.py::test_translator_asm_and_machine[golden/hello_user_name.yml] PASSED [ 60%]
+src/golden_test.py::test_translator_asm_and_machine[golden/cat.yml] PASSED [ 80%]
+src/golden_test.py::test_translator_asm_and_machine[golden/gcd.yml] PASSED [100%]
 
-============================================================== 4 passed in 2.13s ==============================================================
+============================== 5 passed in 2.46s ===============================
 $ poetry run ruff check .
 $ poetry run ruff format .
 7 files left unchanged
