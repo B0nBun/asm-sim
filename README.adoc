@@ -1,0 +1,316 @@
+= Архитектура компьютера. Лабораторная #3: Гусяков Ратмир P3230
+
+- Вариант: `asm | risc | neum | mc -> hw | instr | struct | stream | mem | cstr | prob2 | pipeline`
+- Базовый, без усложнения
+
+== Язык программирования. Ассемблер
+
+[source,ebnf]
+----
+<program> ::= <line>*
+
+<line> ::= <label>? <instruction_or_string>? <comment>? "\n"
+
+<label> ::= <label_name> ":"
+
+<instruction_or_string> ::= <instr> | <string>
+
+<comment> ::= ";" [^\n]+
+
+<label_name> ::= [A-Za-z_]+
+
+<instr> ::= <op_rrr> <reg> <reg> <reg>
+          | <op_rri> <reg> <reg> <imm>
+          | <op_noarg>
+
+<string> ::= "\"" [^\n]+ "\""
+
+<op_rrr> ::= "add"
+
+<op_rri> ::= "lw"
+           | "sw"
+           | "beq"
+           | "bleq"
+           | "addi"
+           | "andi"
+           | "shr"
+
+<op_noarg> = "halt"
+
+<reg> ::= "$" <reg_idx>
+
+<reg_idx> ::= [0-7]
+
+<imm> ::= <uint> | <label_name>
+
+<uint> ::= [0-9]+
+----
+
+Код выполняется последовательно, видимость label-ов глобальная. Использованные в качестве аргументов label-ы при компиляции заменяются на соответствующие адреса (immediate значения).
+
+Заранее определены два label-а: `input` и `output`. Они являются адресами для обращения к устройствам ввода и вывода.
+
+Точкой входа в программу является команда обозначенная label-ом `start`. При ее отсутствии компилятор завершается с ошибкой.
+
+Строковые литералы хранятся в памяти, по симвоу на одно машинное слово.
+
+Нулевой регистр ``$0`` при чтении всегда возвращает ноль. Запись в него бесполезна и ничего не изменяет
+
+Пример программы для вывода "Hello, World!"
+
+[source]
+----
+include::examples/hello.asm[]
+----
+
+== Система команд
+
+|===
+| Операция | Аргументы     | Описание
+|`LW`      | $x, $y, imm   | Сохранить значение `mem[imm + $y]` в регистр `$x` 
+|`SW`      | $x, $y, imm   | Сохранить значение регситра `$x` в `mem[imm + $y]`
+|`BEQ`     | $x, $y, imm   | Перейти к исполнению команды по адресу `imm`, если значения в `$x` и `$y` равны
+|`BLEQ`    | $x, $y, imm   | Перейти к исполнению команды по адресу `imm`, если значение в `$x` меньше или равно чем в `$y`
+|`ADDI`    | $x, $y, imm   | Сохранить сумму `$y + imm` в регистр `$x`
+|`ANDI`    | $x, $y, imm   | Сохранить битовое И `$y & imm` в регистр `$x`
+|`ADD`     | $x, $y, $z    | Сохранить `$y + $z` в регистр `$x`
+|`SHR`     | $x, $y, imm   | Сохранить битовый сдвиг `$y >> imm` в регистр `$x`
+|`HALT`    | -             | Остановить работу программы
+|===
+
+== Организация памяти
+
+Симулируется архитектура Фон-Неймана, поэтому команды и данные хранятся в одной памяти. Адресное пространство линейно и адресуемо, длинна машинного слова составляет 32 бита.
+
+Ввод-вывод реализуется через память, поэтому две ячейки зарезервированы для устройства ввода и вывода (`0xFF00` и `0xFF01` соответственно)
+
+Помимо памяти машина имеет 8 регистров общего назначения (`$0-$7`). Нулевой регситр при чтении всегда возвращает 0. Все регистры также хранят 32 бита.
+
+Помимо регистров общего назначения используется недоступные для команд регистры: `pc, dr, ar, or1, or2, or3`
+
+== Транслятор
+
+CLI: `translator.py <source_file> <target_file>`
+
+Реализовано в модуле: link:src/translator.py[translator]
+
+Используя модуль link:src/lexer.py[lexer] код разбивается на токены, после чего парсер в два обхода (для замены label-ов) создает "машинный код", который представляет из себя json файл.
+
+
+Исходный код обязательно должен содержать метку `start`, обозначающую с какой инструкции начнется исполнение программы.
+
+Машинный код для link:examples/hello.asm[]:
+
+[source,json]
+----
+[
+  14, // Метка start
+  [
+    72, 101, 108, 108, 111, 44, 32, 87, 111, 114, 108, 100, 33, 0, // Байты строки
+    [5, [1], [0], [0]], // Команды формата [opcode, ...args]
+    [1, [2], [1], [0]],
+    [3, [2], [0], [20]],
+    [2, [2], [0], [65281]],
+    [5 [1], [1], [1]],
+    [3, [0], [0], [15]],
+    [9]
+  ]
+]
+----
+
+== Модель процессора
+
+CLI: `machine.py <machine_code_file> <input_file>`
+
+Реализовано в модуле: link:src/machine.py[machine]
+
+=== DataPath
+
+[source,text]
+----
+           +-----------------+                                                   
+           |       OR1       |                                                   
+           |       OR2       |                                                   
+           |       OR3       |                                                   
+      /-+  |       DR        |<-------------------+-------------+                 
+   +-|M |<-|       AR        |-------------+      |             |               
+   | |U |  |       PC        |  |-\        |      v             v            
+   | |X |<=|       R0        |  | D|       |  +----------+ +--------+                           
+   |  \-+  |       R1        |<=| M|<------+->|          | |   IO   |                        
+   |       |       ...       |  | U|<---+  |  |  Memory  | +--------+                           
+   |       |       R7        |  | X|<-+ |  |  |          |      ^                        
+   |       +-----------------+  |-/   | |  |  |          |      |            
+   +--------+  ‖         ‖            | |  |  |          |      |            
+regs[ar]    |  ‖         ‖            | |  |  |          |      |            
+            v  v         v            | |  |  |          |      |            
+           +-------+ +-------+        | |  |  +----------+      |            
+  +-------->\ MUX /   \ MUX /<--+     | |  |       ^            |  
+  |          +---+     +---+    |     | |  |       |            |
+  |            |         |      |     | |  |       |            |  
+  |            v         v      |     | |  |  +----------------------+        
+  |           +--+     +--+     |     | |  +->| Address Code Decoder |                       
+  |            \  \---/  /      |     | |     |                      |            
+  |          +->\  ALU  /       |     | |     +----------------------+     
+  |          |   +-----+        |     | |           ^          ^
+  |          |    |   |         |     | |           |          |   
+  |          |    v   +---------|-----+ |           |          |   
+  |          | +----+ |         |       |           |          |   
+  |          | |C  Z| |         |       |           |          |   
+  |          | +----+ |         |       |           |          |   
+  |          |        v         |       |           |          |   
+ x_sel    alu_ctrl  feedback   y_sel  rwr_sel      mem_wr     mem_rd
+----
+
+Реализован в классе `DataPath`
+
+Сигналы (обрабатываются за один такт, реализованы в виде методов класса):
+
+* `mem_wr` - Записать данные `DR` в ячейку памяти с адресом из `AR`
+* `mem_rd` - Записать данные из ячейки памяти по адресу `AR` в `DR`
+
+При вводе/выводе (реализованом через память) данные помимо памяти также добавляются в `output_buffer` / читаются из `input_buffer`
+
+Запись из АЛУ в регистры также реализована ввиду метода `write_register`, который вызывается каждый такт. Аргументами метода являются `*_sel` и `alu_ctrl`
+
+Описание "селекторов":
+* `x_sel` - Выбор первого операнда для АЛУ-операций. Может быть одним из регистров, либо `IND_AR` (прочитать данные из регистра, индекс которого хранится в нижних битах  `AR`). По умолчанию `$0`
+* `y_sel` - Выбор второго операнда для АЛУ-операций. Может быть одним из регистров. По умолчанию `$0`
+* `alu-ctrl` - Выбор операции выполняемой АЛУ. По умолчанию `only_x`, то есть просто возврат первого операнда
+* `rwr_sel` - Выбор регистра в который надо записать результат АЛУ.  Может быть одним из регистров, либо `IND_AR` (записать данные в регистр, индекс которого хранится в нижних битах `AR`). По умолчанию `$0`
+
+Флаги:
+* `zero` - Если результат АЛУ равен 0
+* `carry` - Если при выполнении операции АЛУ возник перенос
+
+=== ControlUnit
+
+[source,text]
+----
+                    +-----------------------------+
+                    |                             |
+                    |          Data Path          |
+                    |                             |
+                    +-----------------------------+
+                                   ^
+                                   |
++-------------------------------------------------------------------+
+|                           control_signals                         |
+|                                                                   |
+|                           Control Circuit                         |
++-------------------------------------------------------------------+
+  |   |    |                                                ^ 
+ +1  set  sel                                               | 
+  |   |    |                                                | 
+ +-----+   |                                                | 
+ \ MUX /<--+                                                | 
+  +---+                                +---------------+    | 
+    |  +-------+                       |               |    | 
+    +->|  MPC  |-----------------------|   MP memory   |----+ 
+       +-------+                       |               |      
+           ^                           +---------------+      
+           |
+        latch_mpc                                                          
+----
+
+Реализован в классе `ControlUnit`
+
+Каждый такт вызывается метод соответствующий сигналу `latch_mpc` и исполняется микроиснтрукция из памяти.
+
+== Тестирование
+
+Имплементированы при помощи библиотеки `pytest-golden` в модуле link:src/golden_test.py[golden_test]
+
+Запустить тесты: `poetry run pytest . -v`
+
+Обновить конфигурацию golden tests: `poetry run pytest . -v --update-goldens`
+
+CI при помощи Github Actions:
+
+TODO
+
+Пример использования и журнал работы процессора на примере link:examples/cat.asm:
+
+[source,bash]
+----
+$ python3 src/translator.py examples/cat.asm target.out
+$ cat target.out
+[0, [[1, [1], [0], [65280]], [3, [1], [0], [4]], [2, [1], [0], [65281]], [3, [0], [0], [0]], [9]]]
+$ echo 'cat' | python3 src/machine.py target.out /dev/stdin
+echo 'cat' | python3 src/machine.py target.out /dev/stdin
+DEBUG:root:executing: op:only_x($8, $0) -> $6 RD
+DEBUG:root:control_unit: tick:  0 mpc:  0 regs:   0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0
+DEBUG:root:executing: jmp:only_x(7, 0) LW -> 10
+DEBUG:root:control_unit: tick:  1 mpc:  1 regs:   0,    0,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+DEBUG:root:executing: op:mask_snd_r($7, $0) -> $6
+DEBUG:root:control_unit: tick:  2 mpc: 10 regs:   0,    0,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+DEBUG:root:executing: op:only_x($-1, $0) -> $10
+DEBUG:root:control_unit: tick:  3 mpc: 11 regs:   0,    0,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+DEBUG:root:executing: op:mask_imm($7, $0) -> $11
+DEBUG:root:control_unit: tick:  4 mpc: 12 regs:   0,    0,    0,    0,    0,    0,    0, LW  ,    0,    0,    0,    0
+DEBUG:root:executing: op:mask_fst_r($7, $0) -> $9
+DEBUG:root:control_unit: tick:  5 mpc: 13 regs:   0,    0,    0,    0,    0,    0,    0, LW  ,    0,    0,    0, 65280
+DEBUG:root:executing: op:add($10, $11) -> $6
+DEBUG:root:control_unit: tick:  6 mpc: 14 regs:   0,    0,    0,    0,    0,    0,    0, LW  ,    0,    1,    0, 65280
+DEBUG:root:executing: op:only_x($0, $0) -> $0 RD
+DEBUG:root:control_unit: tick:  7 mpc: 15 regs:   0,    0,    0,    0,    0,    0, 65280, LW  ,    0,    1,    0, 65280
+DEBUG:root:input: c
+DEBUG:root:executing: op:only_x($9, $0) -> $6
+
+# ......
+
+DEBUG:root:executing: jump 0
+DEBUG:root:control_unit: tick:228 mpc: 35 regs:   0,    0,    0,    0,    0,    0,    0, BEQ ,    4,    0,    0,    4
+DEBUG:root:executing: op:only_x($8, $0) -> $6 RD
+DEBUG:root:control_unit: tick:229 mpc:  0 regs:   0,    0,    0,    0,    0,    0,    0, BEQ ,    4,    0,    0,    4
+DEBUG:root:executing: jmp:only_x(7, 0) LW -> 10
+DEBUG:root:control_unit: tick:230 mpc:  1 regs:   0,    0,    0,    0,    0,    0,    4, HALT,    4,    0,    0,    4
+DEBUG:root:executing: jmp:only_x(7, 0) SW -> 19
+DEBUG:root:control_unit: tick:231 mpc:  2 regs:   0,    0,    0,    0,    0,    0,    4, HALT,    4,    0,    0,    4
+DEBUG:root:executing: jmp:only_x(7, 0) BEQ -> 27
+DEBUG:root:control_unit: tick:232 mpc:  3 regs:   0,    0,    0,    0,    0,    0,    4, HALT,    4,    0,    0,    4
+DEBUG:root:executing: jmp:only_x(7, 0) BLEQ -> 36
+DEBUG:root:control_unit: tick:233 mpc:  4 regs:   0,    0,    0,    0,    0,    0,    4, HALT,    4,    0,    0,    4
+DEBUG:root:executing: jmp:only_x(7, 0) ADDI -> 45
+DEBUG:root:control_unit: tick:234 mpc:  5 regs:   0,    0,    0,    0,    0,    0,    4, HALT,    4,    0,    0,    4
+DEBUG:root:executing: jmp:only_x(7, 0) ANDI -> 51
+DEBUG:root:control_unit: tick:235 mpc:  6 regs:   0,    0,    0,    0,    0,    0,    4, HALT,    4,    0,    0,    4
+DEBUG:root:executing: jmp:only_x(7, 0) SHR -> 57
+DEBUG:root:control_unit: tick:236 mpc:  7 regs:   0,    0,    0,    0,    0,    0,    4, HALT,    4,    0,    0,    4
+DEBUG:root:executing: jmp:only_x(7, 0) ADD -> 63
+DEBUG:root:control_unit: tick:237 mpc:  8 regs:   0,    0,    0,    0,    0,    0,    4, HALT,    4,    0,    0,    4
+DEBUG:root:executing: jmp:only_x(7, 0) HALT -> 70
+DEBUG:root:control_unit: tick:238 mpc:  9 regs:   0,    0,    0,    0,    0,    0,    4, HALT,    4,    0,    0,    4
+DEBUG:root:executing: op:only_x($0, $0) -> $0 STOP
+DEBUG:root:control_unit: tick:239 mpc: 70 regs:   0,    0,    0,    0,    0,    0,    4, HALT,    4,    0,    0,    4
+cat
+----
+
+Пример проверки исходного кода:
+
+[source,bash]
+----
+$ poetry run pytest . -v
+============================================================= test session starts =============================================================
+platform linux -- Python 3.10.12, pytest-7.4.4, pluggy-1.5.0 -- /home/bonbon/.cache/pypoetry/virtualenvs/asm-sim-M9AJxD4x-py3.10/bin/python
+cachedir: .pytest_cache
+rootdir: /home/bonbon/itmo/arch/lab3
+configfile: pyproject.toml
+plugins: golden-0.2.2
+collected 4 items                                                                                                                             
+
+src/golden_test.py::test_translator_asm_and_machine[golden/fib.yml] PASSED                                                              [ 25%]
+src/golden_test.py::test_translator_asm_and_machine[golden/hello.yml] PASSED                                                            [ 50%]
+src/golden_test.py::test_translator_asm_and_machine[golden/hello_user_name.yml] PASSED                                                  [ 75%]
+src/golden_test.py::test_translator_asm_and_machine[golden/cat.yml] PASSED                                                              [100%]
+
+============================================================== 4 passed in 2.13s ==============================================================
+$ poetry run ruff check .
+$ poetry run ruff format .
+7 files left unchanged
+$ poetry run mypy
+Success: no issues found in 7 source files
+----
+
+== Статистика
+
+TODO
