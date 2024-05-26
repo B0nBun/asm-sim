@@ -6,8 +6,6 @@ import sys
 import isa
 from microcode import microcode
 
-# TODO: think about better ways of logging state and microinstructions (also log translation i guess???)
-
 
 def main(program_file: str, input_file: str) -> None:
     with open(program_file) as f:
@@ -25,11 +23,9 @@ def main(program_file: str, input_file: str) -> None:
 def simulation(program: isa.Program, input_buffer: list[int]) -> str:
     data_path = DataPath(program, input_buffer)
     control_unit = ControlUnit(microcode, data_path)
-    logging.debug("%s", control_unit)
     try:
         while True:
             control_unit.execute_microinstruction()
-            logging.debug("%s", control_unit)
     except StopIteration:
         pass
 
@@ -55,7 +51,7 @@ class DataPath:
         self.input_buffer = input_buffer
         self.output_buffer = []
 
-    def signal_write_register(self, x_sel: int, y_sel: int, alu_ctrl: isa.ALUControl, rwr_sel: int) -> isa.MemoryWord:
+    def write_register(self, x_sel: int, y_sel: int, alu_ctrl: isa.ALUControl, rwr_sel: int) -> isa.MemoryWord:
         x = self._get_reg(x_sel)
         y = self._get_reg(y_sel)
         (r, c) = alu_ctrl.call(x, y)
@@ -134,7 +130,8 @@ class ControlUnit:
 
     def execute_microinstruction(self) -> None:
         minstr = self.microcode[self.mpc]
-        logging.debug("microinstruction: %s", minstr)
+        logging.debug("executing: %s", minstr)
+        logging.debug("control_unit: %s", self)
         next_mpc = self.mpc + 1
         if isinstance(minstr, isa.MIJump):
             next_mpc = self._execute_jump_mi(minstr)
@@ -144,7 +141,7 @@ class ControlUnit:
         self.signal_latch_mpc(next_mpc)
 
     def _execute_jump_mi(self, minstr: isa.MIJump) -> int:
-        alu_result = self.data_path.signal_write_register(minstr.x_sel, minstr.y_sel, minstr.alu_ctrl, rwr_sel=0)
+        alu_result = self.data_path.write_register(minstr.x_sel, minstr.y_sel, minstr.alu_ctrl, rwr_sel=0)
         if minstr.to != -1:
             return minstr.to
         if minstr.if_zero != -1 and self.data_path.zero:
@@ -158,7 +155,7 @@ class ControlUnit:
         return self.mpc + 1
 
     def _execute_operation_mi(self, minstr: isa.MIOperation) -> None:
-        self.data_path.signal_write_register(minstr.x_sel, minstr.y_sel, minstr.alu_ctrl, minstr.rwr_sel)
+        self.data_path.write_register(minstr.x_sel, minstr.y_sel, minstr.alu_ctrl, minstr.rwr_sel)
         if minstr.mem_wr:
             self.data_path.signal_mem_wr()
         if minstr.mem_rd:
