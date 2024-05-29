@@ -25,7 +25,7 @@
 
 <string> ::= "\"" [^\n]+ "\""
 
-<op_rrr> ::= "add"
+<op_rrr> ::= "add" | "sub"
 
 <op_rri> ::= "lw"
            | "sw"
